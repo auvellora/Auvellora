@@ -1,0 +1,251 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import ProductCard from "../components/ProductCard.astro";
+import BranchDivider from "../components/BranchDivider.astro";
+
+const products = (await getCollection("products")).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const featured = products.slice(0, 3);
+---
+
+<Base darkHeader={true}>
+  <!-- HERO — nocturne split: the light is the thesis -->
+  <section class="hero section-dark">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Apgaismojums no atrasta koka</p>
+        <h1 class="hero-title">Gaisma, kas<br />dzīvo kokā.</h1>
+        <p class="lede">
+          Auvellora darina apgaismojuma objektus no atrastiem zariem. Katrs zars
+          ir viens vienīgs — un tāds ir arī katrs eksemplārs.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn--solid" href="/kolekcija/">Skatīt kolekciju</a>
+          <a class="link-arrow" href="/stasts/">
+            Kā tapšana
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"
+              ><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6"
+                stroke-linecap="round" stroke-linejoin="round"></path></svg
+            >
+          </a>
+        </div>
+      </div>
+      <div class="hero-figure">
+        <img
+          src="/images/nocturne.png"
+          alt="Atrasts zars uz melna paneļa, izgaismots ar siltu gaismu"
+          width="332"
+          height="667"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- THESIS -->
+  <section class="section section-bone">
+    <div class="wrap intro">
+      <p class="intro-statement">
+        Mēs neko neizdomājam no jauna. Formu jau ir izveidojis mežs — vējš, laiks
+        un augšana. Mēs tikai atrodam pareizo zaru, notīrām to un pievienojam
+        siltu gaismu.
+      </p>
+    </div>
+    <BranchDivider tone="ink" />
+  </section>
+
+  <!-- FEATURED -->
+  <section class="section section-bone collection">
+    <div class="wrap">
+      <header class="collection-head">
+        <p class="eyebrow">Kolekcija</p>
+        <h2>Seši objekti,<br />katrs — viens vienīgs.</h2>
+      </header>
+      <div class="grid-3">
+        {
+          featured.map((p, i) => (
+            <ProductCard
+              slug={p.id}
+              name={p.data.name}
+              type={p.data.type}
+              image={p.data.image}
+              alt={p.data.alt}
+              size={p.data.size}
+              index={i}
+            />
+          ))
+        }
+      </div>
+      <p class="collection-more">
+        <a class="link-arrow" href="/kolekcija/">
+          Skatīt visu kolekciju
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"
+            ><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round"></path></svg
+          >
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- TIME AS MATERIAL -->
+  <section class="section section-dark material">
+    <div class="wrap material-grid">
+      <div class="material-figure reveal">
+        <img
+          src="/images/about.jpg"
+          alt="Grīdas lampa no zara silti apgaismotā istabā"
+          width="250"
+          height="758"
+          loading="lazy"
+        />
+      </div>
+      <div class="material-copy reveal">
+        <p class="eyebrow">Materiāls</p>
+        <h2>Laiks padara<br />koku skaistu.</h2>
+        <p>
+          Plaisas, sūnas, nolīdzušas šķautnes — tas, ko parasti uzskata par
+          trūkumu, mums ir vērtība. Katrs zars nāk ar savu vēsturi, un mēs to
+          neslēpjam, bet izceļam.
+        </p>
+        <p>
+          Koku sagatavojam ar rokām: notīrām, noslīpējam un pārklājam ar eļļu vai
+          vasku dabiskā tonī. Nekādas krāsas, nekādas imitācijas — tikai koks tāds,
+          kāds tas ir.
+        </p>
+        <div class="material-details">
+          <img src="/images/detail-base.jpg" alt="Zara pamatnes detaļa" width="252" height="378" loading="lazy" />
+          <img src="/images/detail-spot.jpg" alt="Gaismas ķermeņa detaļa uz zara" width="320" height="260" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMISSION -->
+  <section class="section section-bone commission">
+    <div class="wrap--narrow commission-inner">
+      <p class="eyebrow">Pēc pasūtījuma</p>
+      <h2>Katrs zars ir viens vienīgs.<br />Tāds būs arī tavējais.</h2>
+      <p class="lede">
+        Pastāstiet par savu telpu, un mēs atradīsim zaru, kas tur iederēsies.
+        Kopā izvēlamies formu, augstumu un gaismu.
+      </p>
+      <a class="btn" href="/kontakti/">Sākt sarunu</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* HERO */
+  .hero { padding-block: clamp(2.5rem, 6vw, 5rem) clamp(3.5rem, 8vw, 7rem); }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: center;
+  }
+  .hero-title {
+    font-size: var(--step-4);
+    font-weight: 320;
+    margin: 0.5em 0 0.55em;
+  }
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: clamp(1.25rem, 3vw, 2.25rem);
+    margin-top: 2.25rem;
+    flex-wrap: wrap;
+  }
+  .hero-figure {
+    position: relative;
+    justify-self: end;
+    max-width: 420px;
+  }
+  .hero-figure::before {
+    content: "";
+    position: absolute;
+    inset: -14% -10% -6% 8%;
+    background: radial-gradient(
+      55% 42% at 42% 44%,
+      rgba(197, 138, 61, 0.42),
+      rgba(197, 138, 61, 0) 70%
+    );
+    filter: blur(6px);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .hero-figure img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    border-radius: var(--radius);
+  }
+
+  /* INTRO */
+  .intro { max-width: 900px; }
+  .intro-statement {
+    font-family: var(--serif);
+    font-size: var(--step-2);
+    line-height: 1.28;
+    font-weight: 330;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  /* COLLECTION */
+  .collection { padding-top: 0; }
+  .collection-head { margin-bottom: clamp(2rem, 5vw, 3.25rem); }
+  .collection-head h2 { font-size: var(--step-3); margin-top: 0.5rem; }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.25rem, 3vw, 2.25rem);
+  }
+  .collection-more { margin-top: clamp(2rem, 4vw, 3rem); }
+
+  /* MATERIAL */
+  .material-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: center;
+  }
+  .material-figure { position: relative; }
+  .material-figure::before {
+    content: "";
+    position: absolute;
+    inset: -8% -6%;
+    background: radial-gradient(60% 40% at 50% 40%, rgba(197,138,61,0.28), transparent 72%);
+    z-index: 0;
+  }
+  .material-figure img { position: relative; z-index: 1; border-radius: var(--radius); }
+  .material-copy h2 { font-size: var(--step-3); margin: 0.5rem 0 1.25rem; }
+  .material-copy p { color: var(--bone); opacity: 0.82; max-width: 46ch; margin-bottom: 1rem; }
+  .material-details {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 1rem;
+    margin-top: 2rem;
+    max-width: 420px;
+  }
+  .material-details img { border-radius: var(--radius); width: 100%; }
+
+  /* COMMISSION */
+  .commission-inner { text-align: center; }
+  .commission-inner h2 { font-size: var(--step-3); margin: 0.75rem 0 1.25rem; }
+  .commission-inner .lede { margin: 0 auto 2rem; }
+  .commission-inner .btn { margin-inline: auto; }
+
+  @media (max-width: 860px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-figure { justify-self: start; order: -1; max-width: 340px; }
+    .grid-3 { grid-template-columns: 1fr 1fr; }
+    .material-grid { grid-template-columns: 1fr; }
+    .material-figure { max-width: 320px; }
+  }
+  @media (max-width: 560px) {
+    .grid-3 { grid-template-columns: 1fr; }
+  }
+</style>

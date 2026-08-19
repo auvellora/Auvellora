@@ -1,0 +1,167 @@
+---
+interface Props {
+  dark?: boolean;
+}
+const { dark = false } = Astro.props;
+const path = Astro.url.pathname;
+const links = [
+  { href: "/kolekcija/", label: "Kolekcija" },
+  { href: "/stasts/", label: "Stāsts" },
+  { href: "/kontakti/", label: "Kontakti" },
+];
+const isActive = (href: string) =>
+  href === "/" ? path === "/" : path.startsWith(href);
+const wordmark = dark ? "/images/wordmark-bone.png" : "/images/wordmark-ink.png";
+---
+
+<header class:list={["site-head", { "site-head--dark": dark }]}>
+  <div class="wrap head-inner">
+    <a class="brand" href="/" aria-label="Auvellora — sākums">
+      <img src={wordmark} alt="Auvellora" width="3001" height="1501" />
+    </a>
+
+    <nav class="nav" aria-label="Galvenā navigācija">
+      <ul>
+        {
+          links.map((l) => (
+            <li>
+              <a href={l.href} aria-current={isActive(l.href) ? "page" : undefined}>
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-nav">
+      <span class="visually-hidden">Izvēlne</span>
+      <span class="nav-toggle__bars" aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Mobilā navigācija" hidden>
+    <ul>
+      {
+        links.map((l) => (
+          <li>
+            <a href={l.href} aria-current={isActive(l.href) ? "page" : undefined}>
+              {l.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .site-head {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line-ink);
+  }
+  .site-head--dark {
+    background: color-mix(in srgb, var(--ink) 78%, transparent);
+    border-bottom: 1px solid var(--line-bone);
+    color: var(--bone);
+  }
+  .head-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 0.9rem;
+  }
+  .brand img {
+    height: 60px;
+    width: auto;
+  }
+  .nav ul {
+    display: flex;
+    gap: clamp(1.2rem, 2.4vw, 2.4rem);
+    list-style: none;
+    padding: 0;
+  }
+  .nav a {
+    font-size: var(--step--1);
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    padding-block: 0.4em;
+    position: relative;
+    color: inherit;
+  }
+  .nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--amber);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease);
+  }
+  .nav a:hover::after,
+  .nav a[aria-current="page"]::after {
+    transform: scaleX(1);
+  }
+
+  .nav-toggle {
+    display: none;
+    background: transparent;
+    border: 0;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: inherit;
+  }
+  .nav-toggle__bars,
+  .nav-toggle__bars::before,
+  .nav-toggle__bars::after {
+    content: "";
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: currentColor;
+    transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+  }
+  .nav-toggle__bars::before { transform: translateY(-7px); }
+  .nav-toggle__bars::after { transform: translateY(5.5px); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle__bars { background: transparent; }
+  .nav-toggle[aria-expanded="true"] .nav-toggle__bars::before { transform: rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle__bars::after { transform: rotate(-45deg); }
+
+  .mobile-nav {
+    border-top: 1px solid var(--line-ink);
+  }
+  .site-head--dark .mobile-nav { border-top: 1px solid var(--line-bone); }
+  .mobile-nav ul { list-style: none; padding: 0.5rem var(--gutter) 1.25rem; }
+  .mobile-nav a {
+    display: block;
+    font-family: var(--serif);
+    font-size: var(--step-1);
+    padding: 0.6rem 0;
+  }
+
+  @media (max-width: 720px) {
+    .nav { display: none; }
+    .nav-toggle { display: block; }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const toggle = document.querySelector(".nav-toggle");
+    const menu = document.getElementById("mobile-nav");
+    if (!toggle || !menu) return;
+    toggle.addEventListener("click", () => {
+      const open = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!open));
+      menu.hidden = open;
+    });
+  })();
+</script>

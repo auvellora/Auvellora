@@ -1,0 +1,65 @@
+{
+  "$ref": "#/definitions/products",
+  "definitions": {
+    "products": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "order": {
+          "type": "number"
+        },
+        "image": {
+          "type": "string"
+        },
+        "alt": {
+          "type": "string"
+        },
+        "tagline": {
+          "type": "string"
+        },
+        "size": {
+          "type": "string"
+        },
+        "materials": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "light": {
+          "type": "string"
+        },
+        "finishes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "lead": {
+          "type": "string"
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "order",
+        "image",
+        "alt",
+        "tagline",
+        "size",
+        "materials",
+        "lead"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

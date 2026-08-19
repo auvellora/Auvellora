@@ -1,0 +1,154 @@
+---
+import Base from "../layouts/Base.astro";
+import BranchDivider from "../components/BranchDivider.astro";
+
+const steps = [
+  {
+    n: "01",
+    t: "Atrast",
+    d: "Zaru meklējam mežā, upes krastā, reizēm — malkas kaudzē. Der tikai sauss, stabils koks ar raksturu.",
+  },
+  {
+    n: "02",
+    t: "Sagatavot",
+    d: "Notīrām no netīrumiem, liekās mizas un sūnām. Pārbaudām, vai zars ir vesels un bez plaisām.",
+  },
+  {
+    n: "03",
+    t: "Gaisma",
+    d: "Izvēlamies, kur ies gaisma, un paslēpjam vadus zara iekšpusē vai gar aizmuguri. Silti balta, 2700 K.",
+  },
+  {
+    n: "04",
+    t: "Apdare",
+    d: "Noslīpējam virsmu un pārklājam ar eļļu vai vasku dabiskā tonī. Nekādas krāsas, nekādas imitācijas.",
+  },
+];
+---
+
+<Base
+  title="Stāsts — Auvellora"
+  description="Auvellora atrod kokam otro dzīvi. Par to, kā no atrasta zara top apgaismojuma objekts, un kāpēc katrs eksemplārs ir unikāls."
+>
+  <section class="section section-bone page-head">
+    <div class="wrap--narrow">
+      <p class="eyebrow">Stāsts</p>
+      <h1>Kokam — otrā dzīve.</h1>
+      <p class="lede">
+        Auvellora sākās ar vienkāršu domu: labs zars ir pārāk skaists, lai to
+        sadedzinātu. Tā vietā mēs tam pievienojam gaismu.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-dark story">
+    <div class="wrap story-grid">
+      <div class="story-figure reveal">
+        <img
+          src="/images/about.jpg"
+          alt="Grīdas lampa no zara silti apgaismotā istabā"
+          width="250"
+          height="758"
+          loading="lazy"
+        />
+      </div>
+      <div class="story-copy reveal">
+        <p>
+          Katrs mūsu objekts sākas ar pastaigu. Mēs nemeklējam perfektu koku —
+          meklējam tādu, kuram ir sava forma: līkums, atzarojums, gada laika
+          atstāta rēta. Tieši nepilnības padara katru gabalu neatkārtojamu.
+        </p>
+        <p>
+          Rūpnīca izgatavotu tūkstoš vienādu lampu. Mēs izgatavojam vienu. Kad
+          zars ir pārvērties par lampu vai pakaramo, otra tāda paša vairs nav un
+          nekad nebūs.
+        </p>
+        <p>
+          Strādājam Rīgā, ar rokām un nelielos apjomos. Tas nozīmē, ka katram
+          pircējam varam pastāstīt, no kurienes nāk viņa koks.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-bone process">
+    <div class="wrap">
+      <header class="process-head">
+        <p class="eyebrow">Kā tapšana</p>
+        <h2>No zara līdz gaismai —<br />četri soļi.</h2>
+      </header>
+      <ol class="steps">
+        {
+          steps.map((s) => (
+            <li class="step reveal">
+              <span class="step-n">{s.n}</span>
+              <h3 class="step-t">{s.t}</h3>
+              <p class="step-d">{s.d}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+    <BranchDivider tone="ink" />
+    <div class="wrap--narrow process-foot">
+      <h2>Gribat savu?</h2>
+      <p>Pastāstiet par savu telpu, un mēs atradīsim tai zaru.</p>
+      <a class="btn" href="/kontakti/">Sākt sarunu</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-head h1 { font-size: var(--step-3); margin: 0.5rem 0 1rem; }
+
+  .story-grid {
+    display: grid;
+    grid-template-columns: 0.75fr 1.25fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: center;
+  }
+  .story-figure { position: relative; max-width: 360px; }
+  .story-figure::before {
+    content: "";
+    position: absolute;
+    inset: -8% -6%;
+    background: radial-gradient(60% 40% at 50% 42%, rgba(197,138,61,0.26), transparent 72%);
+    z-index: 0;
+  }
+  .story-figure img { position: relative; z-index: 1; border-radius: var(--radius); }
+  .story-copy p { color: var(--bone); opacity: 0.84; max-width: 52ch; margin-bottom: 1.15rem; }
+
+  .process-head { margin-bottom: clamp(2rem, 5vw, 3.25rem); }
+  .process-head h2 { font-size: var(--step-3); margin-top: 0.5rem; }
+  .steps {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+  .step { border-top: 1px solid var(--ink); padding-top: 1.1rem; }
+  .step-n {
+    font-family: var(--serif);
+    font-size: var(--step-2);
+    color: var(--amber);
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+  .step-t { font-size: var(--step-1); margin-bottom: 0.5rem; }
+  .step-d { font-size: var(--step--1); color: var(--taupe); line-height: 1.6; }
+
+  .process-foot { text-align: center; }
+  .process-foot h2 { font-size: var(--step-2); margin-bottom: 0.75rem; }
+  .process-foot p { color: var(--taupe); margin-bottom: 1.75rem; }
+  .process-foot .btn { margin-inline: auto; }
+
+  @media (max-width: 860px) {
+    .story-grid { grid-template-columns: 1fr; }
+    .story-figure { max-width: 300px; }
+    .steps { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 460px) {
+    .steps { grid-template-columns: 1fr; }
+  }
+</style>

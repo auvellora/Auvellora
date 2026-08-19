@@ -1,0 +1,177 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+
+export async function getStaticPaths() {
+  const products = (await getCollection("products")).sort(
+    (a, b) => a.data.order - b.data.order
+  );
+  return products.map((entry, i) => {
+    const prev = products[(i - 1 + products.length) % products.length];
+    const next = products[(i + 1) % products.length];
+    return {
+      params: { slug: entry.id },
+      props: { entry, prev, next },
+    };
+  });
+}
+
+const { entry, prev, next } = Astro.props;
+const d = entry.data;
+const { Content } = await render(entry);
+---
+
+<Base
+  title={`${d.name} — ${d.type} · Auvellora`}
+  description={d.lead}
+>
+  <article class="pdp section section-bone">
+    <div class="wrap pdp-grid">
+      <div class="pdp-figure">
+        <img src={d.image} alt={d.alt} width="600" height="750" fetchpriority="high" />
+      </div>
+
+      <div class="pdp-meta">
+        <p class="eyebrow">{d.type}</p>
+        <h1>{d.name}</h1>
+        <p class="pdp-tagline">{d.tagline}</p>
+
+        <div class="pdp-body">
+          <p class="pdp-lead">{d.lead}</p>
+          <Content />
+        </div>
+
+        <dl class="spec">
+          <div>
+            <dt>Izmēri</dt>
+            <dd>{d.size}</dd>
+          </div>
+          <div>
+            <dt>Materiāli</dt>
+            <dd>{d.materials.join(" · ")}</dd>
+          </div>
+          {d.light && (
+            <div>
+              <dt>Gaisma</dt>
+              <dd>{d.light}</dd>
+            </div>
+          )}
+          {d.finishes && (
+            <div>
+              <dt>Apdare</dt>
+              <dd>{d.finishes.join(" · ")}</dd>
+            </div>
+          )}
+          <div>
+            <dt>Cena</dt>
+            <dd>Pēc pieprasījuma</dd>
+          </div>
+        </dl>
+
+        <p class="unikals">Katrs eksemplārs ir viens vienīgs. Zaru izvēlamies kopā ar jums.</p>
+        <a class="btn btn--solid" href="/kontakti/">Uzzināt vairāk par šo objektu</a>
+      </div>
+    </div>
+
+    <nav class="pdp-nav wrap" aria-label="Kolekcijas navigācija">
+      <a href={`/kolekcija/${prev.id}/`} class="pdp-nav__link">
+        <span class="pdp-nav__dir">← Iepriekšējais</span>
+        <span class="pdp-nav__name">{prev.data.name}</span>
+      </a>
+      <a href="/kolekcija/" class="pdp-nav__all">Visa kolekcija</a>
+      <a href={`/kolekcija/${next.id}/`} class="pdp-nav__link pdp-nav__link--next">
+        <span class="pdp-nav__dir">Nākamais →</span>
+        <span class="pdp-nav__name">{next.data.name}</span>
+      </a>
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .pdp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: start;
+  }
+  .pdp-figure {
+    position: sticky;
+    top: 88px;
+    background: var(--bone-2);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .pdp-figure img { width: 100%; height: auto; object-fit: cover; }
+
+  .pdp-meta h1 { font-size: var(--step-3); margin: 0.4rem 0 0.3rem; }
+  .pdp-tagline {
+    font-family: var(--serif);
+    font-size: var(--step-1);
+    color: var(--taupe);
+    font-style: italic;
+    margin-bottom: 1.75rem;
+  }
+  .pdp-body { max-width: 46ch; margin-bottom: 2.25rem; }
+  .pdp-lead { font-size: var(--step-1); line-height: 1.5; margin-bottom: 1rem; }
+  .pdp-body :global(p) { margin-bottom: 1rem; color: var(--ink); }
+
+  .spec {
+    border-top: 1px solid var(--line-ink);
+    margin-bottom: 2rem;
+  }
+  .spec > div {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--line-ink);
+  }
+  .spec dt {
+    font-size: var(--step--1);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--taupe);
+  }
+  .spec dd { font-size: var(--step-0); }
+
+  .unikals {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--taupe);
+    margin-bottom: 1.5rem;
+    max-width: 42ch;
+  }
+
+  .pdp-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: clamp(3.5rem, 8vw, 6rem);
+    padding-top: 2rem;
+    border-top: 1px solid var(--line-ink);
+  }
+  .pdp-nav__link { display: grid; gap: 0.2rem; }
+  .pdp-nav__link--next { text-align: right; }
+  .pdp-nav__dir {
+    font-size: var(--step--1);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--taupe);
+  }
+  .pdp-nav__name { font-family: var(--serif); font-size: var(--step-1); }
+  .pdp-nav__all {
+    font-size: var(--step--1);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    border-bottom: 1px solid var(--amber);
+    padding-bottom: 2px;
+  }
+
+  @media (max-width: 820px) {
+    .pdp-grid { grid-template-columns: 1fr; }
+    .pdp-figure { position: static; max-width: 480px; }
+    .pdp-nav__all { display: none; }
+  }
+</style>

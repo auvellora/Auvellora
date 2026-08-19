@@ -1,0 +1,77 @@
+---
+interface Props {
+  slug: string;
+  name: string;
+  type: string;
+  image: string;
+  alt: string;
+  size: string;
+  index?: number;
+}
+const { slug, name, type, image, alt, size, index } = Astro.props;
+const num = index != null ? String(index + 1).padStart(2, "0") : undefined;
+---
+
+<a class="card reveal" href={`/kolekcija/${slug}/`}>
+  <div class="card-figure">
+    <img src={image} alt={alt} loading="lazy" />
+  </div>
+  <div class="card-meta">
+    <div class="card-head">
+      <p class="card-type">{type}</p>
+      {num && <span class="card-num">{num}</span>}
+    </div>
+    <h3 class="card-name">{name}</h3>
+    <p class="card-size">{size}</p>
+  </div>
+</a>
+
+<style>
+  .card {
+    display: block;
+    color: inherit;
+  }
+  .card-figure {
+    position: relative;
+    overflow: hidden;
+    background: var(--bone-2);
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius);
+  }
+  .card-figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s var(--ease);
+  }
+  .card:hover .card-figure img { transform: scale(1.035); }
+  .card:focus-visible { outline-offset: 6px; }
+
+  .card-meta { padding-top: 1rem; }
+  .card-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  .card-type {
+    font-size: var(--step--1);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--taupe);
+  }
+  .card-num {
+    font-family: var(--serif);
+    font-size: var(--step--1);
+    color: var(--taupe);
+  }
+  .card-name {
+    font-family: var(--serif);
+    font-size: var(--step-2);
+    margin-top: 0.15em;
+  }
+  .card-size {
+    font-size: var(--step--1);
+    color: var(--taupe);
+    margin-top: 0.35em;
+  }
+</style>

@@ -1,0 +1,73 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import ProductCard from "../../components/ProductCard.astro";
+import BranchDivider from "../../components/BranchDivider.astro";
+
+const products = (await getCollection("products")).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<Base
+  title="Kolekcija — Auvellora"
+  description="Seši objekti no atrasta koka: grīdas un sienas lampas, lasāmlampa un pakaramais. Katrs eksemplārs ir unikāls."
+>
+  <section class="section section-bone page-head">
+    <div class="wrap">
+      <p class="eyebrow">Kolekcija</p>
+      <h1>Seši objekti no koka.</h1>
+      <p class="lede">
+        Lampas un funkcionāli objekti, kas sākas ar atrastu zaru. Cenas — pēc
+        pieprasījuma, jo katrs eksemplārs ir viens vienīgs.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-bone collection-grid">
+    <div class="wrap">
+      <div class="grid-3">
+        {
+          products.map((p, i) => (
+            <ProductCard
+              slug={p.id}
+              name={p.data.name}
+              type={p.data.type}
+              image={p.data.image}
+              alt={p.data.alt}
+              size={p.data.size}
+              index={i}
+            />
+          ))
+        }
+      </div>
+    </div>
+    <BranchDivider tone="ink" />
+    <div class="wrap--narrow collection-foot">
+      <p>
+        Neatrodat īsto? Katru objektu var pielāgot — augstumu, zara formu un
+        gaismu izvēlamies kopā.
+      </p>
+      <a class="btn" href="/kontakti/">Pastāstiet par savu telpu</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-head { padding-bottom: clamp(1.5rem, 4vw, 2.5rem); }
+  .page-head h1 { font-size: var(--step-3); margin: 0.5rem 0 1rem; }
+  .page-head .lede { max-width: 52ch; }
+
+  .collection-grid { padding-top: 0; }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.5rem) clamp(1.25rem, 3vw, 2.25rem);
+  }
+  .collection-foot { text-align: center; }
+  .collection-foot p { max-width: 42ch; margin: 0 auto 1.75rem; color: var(--taupe); }
+  .collection-foot .btn { margin-inline: auto; }
+
+  @media (max-width: 860px) { .grid-3 { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .grid-3 { grid-template-columns: 1fr; } }
+</style>
