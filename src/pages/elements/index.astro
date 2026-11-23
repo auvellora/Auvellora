@@ -1,0 +1,69 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import ElementCard from "../../components/ElementCard.astro";
+import BranchDivider from "../../components/BranchDivider.astro";
+
+const elements = (await getCollection("elements")).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<Base
+  title="Elements — Auvellora"
+  description="Objects made from found wood: a floor lamp and a coat stand, each made by hand in Latvia. Every piece is one of a kind."
+>
+  <section class="section section-bone page-head">
+    <div class="wrap">
+      <p class="eyebrow">Elements</p>
+      <h1>Made, not manufactured.</h1>
+      <p class="lede">
+        Objects that begin with a found branch. Prices on request, because every
+        piece is one of a kind.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-bone collection-grid">
+    <div class="wrap">
+      <div class:list={["grid", { "grid--wide": elements.length >= 3 }]}>
+        {
+          elements.map((e, i) => (
+            <ElementCard
+              slug={e.id}
+              name={e.data.name}
+              type={e.data.type}
+              image={e.data.image}
+              alt={e.data.alt}
+              tagline={e.data.tagline}
+              index={i}
+            />
+          ))
+        }
+      </div>
+    </div>
+    <BranchDivider tone="ink" />
+    <div class="wrap--narrow cta-foot">
+      <h2>Not quite the one?</h2>
+      <p>
+        Every Element can be adapted. We choose the height, the branch and the
+        light together with you.
+      </p>
+      <a class="btn" href="/contact/?interest=element">Tell us about your space</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .collection-grid { padding-top: 0; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(var(--cols, 2), 1fr);
+    gap: clamp(1.5rem, 3vw, 2.5rem) clamp(1.25rem, 3vw, 2.25rem);
+    max-width: 960px;
+  }
+  /* three or more pieces: three columns, full width */
+  .grid--wide { --cols: 3; max-width: none; }
+  @media (max-width: 860px) { .grid--wide { --cols: 2; } }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+</style>

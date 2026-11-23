@@ -1,0 +1,199 @@
+---
+import Base from "../layouts/Base.astro";
+import { EMAIL, FORM_ENDPOINT } from "../site";
+// How the form sends messages is set in src/site.ts.
+---
+
+<Base
+  title="Contact — Auvellora"
+  description="Get in touch with Auvellora about an Element or an interior project."
+>
+  <section class="section section-bone page-head">
+    <div class="wrap">
+      <p class="eyebrow">Contact</p>
+      <h1>Tell us about your space.</h1>
+      <p class="lede">
+        Whether it's an Element from the collection or an interior made from
+        scratch, write a few lines and we'll get back to you.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-bone contact">
+    <div class="wrap contact-grid">
+      <aside class="contact-info">
+        <div class="info-block">
+          <h2 class="eyebrow">Email</h2>
+          <ul>
+            <li><a href={`mailto:${EMAIL}`}>{EMAIL}</a></li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <h2 class="eyebrow">Interiors</h2>
+          <p class="muted">
+            Planning something larger? Send a photo of the space and rough
+            dimensions — that's where every project begins.
+          </p>
+        </div>
+        <div class="info-block">
+          <h2 class="eyebrow">Response</h2>
+          <p class="muted">We usually reply within 1–2 business days.</p>
+        </div>
+      </aside>
+
+      <form
+        class="form"
+        id="enquiry"
+        action={FORM_ENDPOINT || `mailto:${EMAIL}`}
+        method="post"
+        enctype={FORM_ENDPOINT ? undefined : "text/plain"}
+        data-email={EMAIL}
+        data-endpoint={FORM_ENDPOINT}
+      >
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" autocomplete="name" required />
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required />
+        </div>
+
+        <div class="field">
+          <label for="interest">What are you interested in?</label>
+          <select id="interest" name="interest">
+            <option value="element">An Element</option>
+            <option value="interior">An interior project</option>
+            <option value="other">Something else</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required
+            placeholder="Tell us about the space, the piece, or the idea…"></textarea>
+        </div>
+
+        <button class="btn btn--solid" type="submit">Send enquiry</button>
+        <p class="form-note" id="form-note" aria-live="polite">
+          We usually reply within 1–2 business days.
+        </p>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<script is:inline>
+  (() => {
+    const form = document.getElementById("enquiry");
+    if (!form) return;
+    const note = document.getElementById("form-note");
+    const field = (n) => form.elements.namedItem(n);
+    const params = new URLSearchParams(location.search);
+
+    // Arriving from "Ask about Rise" or "Start a conversation" on Interiors:
+    // pre-select the topic and start the message.
+    const interest = params.get("interest");
+    if (interest && Array.from(field("interest").options).some((o) => o.value === interest)) {
+      field("interest").value = interest;
+    }
+    const piece = params.get("piece");
+    if (piece && !field("message").value) {
+      field("message").value = `About ${piece.slice(0, 40)}: `;
+    }
+
+    const labels = { element: "An Element", interior: "An interior project", other: "Something else" };
+
+    form.addEventListener("submit", async (ev) => {
+      if (!form.checkValidity()) return;
+      ev.preventDefault();
+      const name = field("name").value.trim();
+      const email = field("email").value.trim();
+      const topic = labels[field("interest").value] || field("interest").value;
+      const message = field("message").value.trim();
+
+      // No form service yet: open the visitor's email app, message ready to send.
+      if (!form.dataset.endpoint) {
+        const subject = `Enquiry: ${topic} (from ${name})`;
+        const body = `${message}\n\n— ${name}\n${email}`;
+        location.href =
+          `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        note.textContent =
+          `Your email app should open with the message ready to send. If it doesn't, write to ${form.dataset.email}.`;
+        return;
+      }
+
+      // Form service set (e.g. Formspree): send in the background.
+      note.textContent = "Sending…";
+      try {
+        const res = await fetch(form.dataset.endpoint, {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: new FormData(form),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        form.reset();
+        note.textContent = "Thank you. We'll get back to you within 1–2 business days.";
+      } catch {
+        note.textContent = `That didn't go through. Please write to ${form.dataset.email} instead.`;
+      }
+    });
+  })();
+</script>
+
+<style>
+  .contact { padding-top: 0; }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: start;
+  }
+
+  .info-block { margin-bottom: 2.25rem; }
+  .info-block h2 { margin-bottom: 0.85rem; }
+  .info-block ul { list-style: none; padding: 0; display: grid; gap: 0.4rem; }
+  .info-block a { border-bottom: 1px solid transparent; padding-bottom: 1px; overflow-wrap: anywhere; }
+  .info-block a:hover { border-bottom-color: var(--amber); }
+  .muted { color: var(--taupe); font-size: var(--step--1); max-width: 36ch; line-height: 1.6; }
+
+  .form {
+    background: var(--bone-2);
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    border-radius: var(--radius);
+    border: 1px solid var(--line-ink);
+  }
+  .field { margin-bottom: 1.25rem; }
+  label {
+    display: block;
+    font-size: var(--step--1);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    margin-bottom: 0.5rem;
+  }
+  input, select, textarea {
+    width: 100%;
+    font-family: var(--sans);
+    font-size: var(--step-0);
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--line-ink);
+    border-radius: var(--radius);
+    padding: 0.75em 0.85em;
+    transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  }
+  textarea { resize: vertical; min-height: 7rem; }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--amber);
+    box-shadow: 0 0 0 3px rgba(197, 138, 61, 0.22);
+  }
+  .form .btn { margin-top: 0.5rem; }
+  .form-note { font-size: var(--step--1); color: var(--taupe); margin-top: 1rem; }
+
+  @media (max-width: 860px) {
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+</style>

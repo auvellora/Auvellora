@@ -152,3 +152,46 @@ p a:hover { text-decoration-color: var(--amber); }
   *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* ---------- shared page parts ---------- */
+
+/* page header on inner pages */
+.page-head { padding-bottom: clamp(1.5rem, 4vw, 2.5rem); }
+.page-head h1 { font-size: var(--step-3); margin: 0.5rem 0 1rem; }
+.page-head .lede { max-width: 52ch; }
+.page-head--center { text-align: center; }
+.page-head--center .lede { margin-inline: auto; }
+
+/* numbered steps (Story, Interiors) */
+.steps-head { text-align: center; margin-bottom: clamp(2rem, 5vw, 3.25rem); }
+.steps-head h2 { font-size: var(--step-3); margin-top: 0.5rem; }
+.steps {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 4), 1fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+.step { border-top: 1px solid var(--ink); padding-top: 1.1rem; }
+.step-n {
+  font-family: var(--serif);
+  font-size: var(--step-2);
+  color: var(--amber);
+  display: block;
+  margin-bottom: 0.6rem;
+}
+.step-t { font-size: var(--step-1); margin-bottom: 0.5rem; }
+.step-d { font-size: var(--step--1); color: var(--taupe); line-height: 1.6; }
+
+/* closing call to action under a section */
+.cta-foot { text-align: center; }
+.cta-foot h2 { font-size: var(--step-2); margin-bottom: 0.75rem; }
+.cta-foot p { color: var(--taupe); margin: 0 auto 1.75rem; max-width: 44ch; }
+.cta-foot .btn { margin-inline: auto; }
+
+@media (max-width: 860px) {
+  .steps { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 460px) {
+  .steps { grid-template-columns: 1fr; }
+}

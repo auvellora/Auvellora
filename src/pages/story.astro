@@ -1,0 +1,131 @@
+---
+import Base from "../layouts/Base.astro";
+import BranchDivider from "../components/BranchDivider.astro";
+
+const steps = [
+  {
+    n: "01",
+    t: "Find",
+    d: "We look for wood in forests, along riverbanks, on the seashore, sometimes in a woodpile. Only dry, stable wood with character makes the cut.",
+  },
+  {
+    n: "02",
+    t: "Prepare",
+    d: "We clean off dirt, loose bark, and moss, and check the wood is sound and free of cracks.",
+  },
+  {
+    n: "03",
+    t: "Light & form",
+    d: "Where a piece calls for light, we hide the wiring inside the wood or along its back. Warm white, never harsh. Where it doesn't, the form leads.",
+  },
+  {
+    n: "04",
+    t: "Finish",
+    d: "We sand the surface and seal it with oil or wax in a natural tone. No paint, no imitation.",
+  },
+];
+---
+
+<Base
+  title="Story — Auvellora"
+  description="The Auvellora story: giving found wood a second life, by hand in Latvia."
+>
+  <section class="section section-bone page-head page-head--center">
+    <div class="wrap--narrow">
+      <p class="eyebrow">Story</p>
+      <h1>A second life for wood.</h1>
+      <p class="lede">
+        Auvellora began with a simple thought: a good branch is too beautiful to
+        burn. So instead, we give it new life, as an object, or as part of a room.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-dark story">
+    <div class="wrap story-grid">
+      <div class="story-figure reveal">
+        <img
+          src="/images/story-lamp.jpg"
+          alt="A floor lamp from a branch, glowing in a calm room"
+          width="250"
+          height="758"
+          loading="lazy"
+        />
+      </div>
+      <div class="story-copy reveal">
+        <p>
+          Every piece begins with a walk. We're not looking for perfect wood —
+          we're looking for wood with a form of its own: a bend, a fork, a scar
+          left by a season. It's the imperfections that make each one impossible
+          to repeat.
+        </p>
+        <p>
+          A factory would make a thousand identical pieces. We make one. Whether
+          it's a reading lamp or a wall that fills a room, there is no second
+          exactly the same, and there never will be.
+        </p>
+        <p>
+          We work from Latvia, by hand and in small numbers. That means we can
+          tell every client exactly where their wood came from.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-bone">
+    <div class="wrap">
+      <header class="steps-head">
+        <p class="eyebrow">How it's made</p>
+        <h2>From branch to finished piece, four steps.</h2>
+      </header>
+      <ol class="steps">
+        {
+          steps.map((s) => (
+            <li class="step reveal">
+              <span class="step-n">{s.n}</span>
+              <h3 class="step-t">{s.t}</h3>
+              <p class="step-d">{s.d}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+    <BranchDivider tone="ink" />
+    <div class="wrap--narrow cta-foot">
+      <h2>Want your own?</h2>
+      <p>Tell us about your space, and we'll find the wood for it.</p>
+      <a class="btn" href="/contact/">Start a conversation</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .story-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: center;
+  }
+  .story-figure { position: relative; max-width: 360px; }
+  .story-figure::before {
+    content: "";
+    position: absolute;
+    inset: -8% -6%;
+    background: radial-gradient(60% 40% at 50% 42%, rgba(197,138,61,0.22), transparent 72%);
+    z-index: 0;
+  }
+  .story-figure img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-radius: var(--radius);
+  }
+  .story-copy p { color: var(--bone); opacity: 0.84; max-width: 52ch; margin-bottom: 1.15rem; }
+
+  @media (max-width: 860px) {
+    .story-grid { grid-template-columns: 1fr; }
+    .story-figure { max-width: 320px; }
+  }
+</style>

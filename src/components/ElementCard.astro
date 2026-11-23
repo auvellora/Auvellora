@@ -5,16 +5,16 @@ interface Props {
   type: string;
   image: string;
   alt: string;
-  size: string;
+  tagline: string;
   index?: number;
 }
-const { slug, name, type, image, alt, size, index } = Astro.props;
+const { slug, name, type, image, alt, tagline, index } = Astro.props;
 const num = index != null ? String(index + 1).padStart(2, "0") : undefined;
 ---
 
-<a class="card reveal" href={`/kolekcija/${slug}/`}>
+<a class="card reveal" href={`/elements/${slug}/`}>
   <div class="card-figure">
-    <img src={image} alt={alt} loading="lazy" />
+    <img src={image} alt={alt} width="1000" height="1250" loading="lazy" />
   </div>
   <div class="card-meta">
     <div class="card-head">
@@ -22,7 +22,7 @@ const num = index != null ? String(index + 1).padStart(2, "0") : undefined;
       {num && <span class="card-num">{num}</span>}
     </div>
     <h3 class="card-name">{name}</h3>
-    <p class="card-size">{size}</p>
+    <p class="card-tag">{tagline}</p>
   </div>
 </a>
 
@@ -69,7 +69,7 @@ const num = index != null ? String(index + 1).padStart(2, "0") : undefined;
     font-size: var(--step-2);
     margin-top: 0.15em;
   }
-  .card-size {
+  .card-tag {
     font-size: var(--step--1);
     color: var(--taupe);
     margin-top: 0.35em;

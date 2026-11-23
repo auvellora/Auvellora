@@ -3,12 +3,12 @@ import { getCollection, render } from "astro:content";
 import Base from "../../layouts/Base.astro";
 
 export async function getStaticPaths() {
-  const products = (await getCollection("products")).sort(
+  const elements = (await getCollection("elements")).sort(
     (a, b) => a.data.order - b.data.order
   );
-  return products.map((entry, i) => {
-    const prev = products[(i - 1 + products.length) % products.length];
-    const next = products[(i + 1) % products.length];
+  return elements.map((entry, i) => {
+    const prev = elements[(i - 1 + elements.length) % elements.length];
+    const next = elements[(i + 1) % elements.length];
     return {
       params: { slug: entry.id },
       props: { entry, prev, next },
@@ -19,16 +19,26 @@ export async function getStaticPaths() {
 const { entry, prev, next } = Astro.props;
 const d = entry.data;
 const { Content } = await render(entry);
+const ask = `/contact/?interest=element&piece=${encodeURIComponent(d.name)}`;
+// With only two pieces, "previous" and "next" are the same one: show it once.
+const showPrev = prev.id !== entry.id && prev.id !== next.id;
+const showNext = next.id !== entry.id;
 ---
 
-<Base
-  title={`${d.name} — ${d.type} · Auvellora`}
-  description={d.lead}
->
+<Base title={`${d.name} — ${d.type} · Auvellora`} description={d.lead}>
   <article class="pdp section section-bone">
     <div class="wrap pdp-grid">
-      <div class="pdp-figure">
-        <img src={d.image} alt={d.alt} width="600" height="750" fetchpriority="high" />
+      <div class="pdp-media">
+        <div class="pdp-figure">
+          <img src={d.image} alt={d.alt} width="1000" height="1250" fetchpriority="high" />
+        </div>
+        {
+          d.roomImage && (
+            <div class="pdp-figure pdp-figure--room">
+              <img src={d.roomImage} alt={d.roomAlt ?? ""} width="1000" height="1250" loading="lazy" />
+            </div>
+          )
+        }
       </div>
 
       <div class="pdp-meta">
@@ -43,46 +53,58 @@ const { Content } = await render(entry);
 
         <dl class="spec">
           <div>
-            <dt>Izmēri</dt>
-            <dd>{d.size}</dd>
+            <dt>Size</dt>
+            <dd>{d.size ?? "Made to fit your space"}</dd>
           </div>
           <div>
-            <dt>Materiāli</dt>
+            <dt>Materials</dt>
             <dd>{d.materials.join(" · ")}</dd>
           </div>
           {d.light && (
             <div>
-              <dt>Gaisma</dt>
+              <dt>Light</dt>
               <dd>{d.light}</dd>
             </div>
           )}
           {d.finishes && (
             <div>
-              <dt>Apdare</dt>
+              <dt>Finish</dt>
               <dd>{d.finishes.join(" · ")}</dd>
             </div>
           )}
           <div>
-            <dt>Cena</dt>
-            <dd>Pēc pieprasījuma</dd>
+            <dt>Price</dt>
+            <dd>On request</dd>
           </div>
         </dl>
 
-        <p class="unikals">Katrs eksemplārs ir viens vienīgs. Zaru izvēlamies kopā ar jums.</p>
-        <a class="btn btn--solid" href="/kontakti/">Uzzināt vairāk par šo objektu</a>
+        <p class="unique">Every piece is one of a kind. We choose the branch together with you.</p>
+        <a class="btn btn--solid" href={ask}>Ask about {d.name}</a>
       </div>
     </div>
 
-    <nav class="pdp-nav wrap" aria-label="Kolekcijas navigācija">
-      <a href={`/kolekcija/${prev.id}/`} class="pdp-nav__link">
-        <span class="pdp-nav__dir">← Iepriekšējais</span>
-        <span class="pdp-nav__name">{prev.data.name}</span>
-      </a>
-      <a href="/kolekcija/" class="pdp-nav__all">Visa kolekcija</a>
-      <a href={`/kolekcija/${next.id}/`} class="pdp-nav__link pdp-nav__link--next">
-        <span class="pdp-nav__dir">Nākamais →</span>
-        <span class="pdp-nav__name">{next.data.name}</span>
-      </a>
+    <nav class="pdp-nav wrap" aria-label="More Elements">
+      {
+        showPrev ? (
+          <a href={`/elements/${prev.id}/`} class="pdp-nav__link">
+            <span class="pdp-nav__dir">← Previous</span>
+            <span class="pdp-nav__name">{prev.data.name}</span>
+          </a>
+        ) : (
+          <span />
+        )
+      }
+      <a href="/elements/" class="pdp-nav__all">All Elements</a>
+      {
+        showNext ? (
+          <a href={`/elements/${next.id}/`} class="pdp-nav__link pdp-nav__link--next">
+            <span class="pdp-nav__dir">Next →</span>
+            <span class="pdp-nav__name">{next.data.name}</span>
+          </a>
+        ) : (
+          <span />
+        )
+      }
     </nav>
   </article>
 </Base>
@@ -94,15 +116,15 @@ const { Content } = await render(entry);
     gap: clamp(2rem, 6vw, 5rem);
     align-items: start;
   }
+  .pdp-media { display: grid; gap: clamp(1rem, 2vw, 1.5rem); }
   .pdp-figure {
-    position: sticky;
-    top: 88px;
     background: var(--bone-2);
     border-radius: var(--radius);
     overflow: hidden;
   }
-  .pdp-figure img { width: 100%; height: auto; object-fit: cover; }
+  .pdp-figure img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
 
+  .pdp-meta { position: sticky; top: 104px; }
   .pdp-meta h1 { font-size: var(--step-3); margin: 0.4rem 0 0.3rem; }
   .pdp-tagline {
     font-family: var(--serif);
@@ -134,7 +156,7 @@ const { Content } = await render(entry);
   }
   .spec dd { font-size: var(--step-0); }
 
-  .unikals {
+  .unique {
     font-family: var(--serif);
     font-style: italic;
     color: var(--taupe);
@@ -143,16 +165,16 @@ const { Content } = await render(entry);
   }
 
   .pdp-nav {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    justify-content: space-between;
     gap: 1rem;
     margin-top: clamp(3.5rem, 8vw, 6rem);
     padding-top: 2rem;
     border-top: 1px solid var(--line-ink);
   }
   .pdp-nav__link { display: grid; gap: 0.2rem; }
-  .pdp-nav__link--next { text-align: right; }
+  .pdp-nav__link--next { text-align: right; justify-self: end; }
   .pdp-nav__dir {
     font-size: var(--step--1);
     letter-spacing: 0.1em;
@@ -171,7 +193,10 @@ const { Content } = await render(entry);
 
   @media (max-width: 820px) {
     .pdp-grid { grid-template-columns: 1fr; }
-    .pdp-figure { position: static; max-width: 480px; }
-    .pdp-nav__all { display: none; }
+    /* phone: main photo, then the text, then the room photo */
+    .pdp-media { display: contents; }
+    .pdp-figure { max-width: 480px; }
+    .pdp-figure--room { order: 1; }
+    .pdp-meta { position: static; }
   }
 </style>

@@ -6,14 +6,14 @@ import Footer from "../components/Footer.astro";
 interface Props {
   title?: string;
   description?: string;
-  /** Use a dark (nocturne) header when the page opens on a dark hero. */
+  /** Use a dark header when the page opens on a dark hero. */
   darkHeader?: boolean;
 }
 
 const {
-  title = "Auvellora — apgaismojuma objekti no atrasta koka",
+  title = "Auvellora — Objects and interiors from reclaimed wood",
   description =
-    "Auvellora veido apgaismojuma un funkcionālus objektus no atrasta koka. Katrs zars ir viens vienīgs — un tāds ir arī katrs eksemplārs.",
+    "Auvellora shapes branches into objects and whole spaces. From a single lamp to an entire room, each one of a kind.",
   darkHeader = false,
 } = Astro.props;
 
@@ -21,10 +21,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
 ---
 
 <!doctype html>
-<html lang="lv">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
@@ -32,7 +32,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:locale" content="lv_LV" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL("/images/rise.jpg", Astro.site).href} />
+    <meta property="og:locale" content="en_GB" />
 
     <link rel="icon" type="image/png" href="/images/icon.png" />
 
@@ -44,7 +46,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     />
   </head>
   <body>
-    <a class="skip" href="#main">Pāriet uz saturu</a>
+    <a class="skip" href="#main">Skip to content</a>
     <Nav dark={darkHeader} />
     <main id="main">
       <slot />

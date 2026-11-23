@@ -1,24 +1,28 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 
-// Each product is one Markdown file in src/content/products/.
+// Each Element is one Markdown file in src/content/elements/.
 // To add a piece to the site, copy a file, change the front-matter, drop in a
-// photo — no code, no rebuild-by-hand. That is the whole point of collections.
-const products = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/products" }),
+// photo. The home page, the Elements page and the piece's own page all update
+// on the next build.
+const elements = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/elements" }),
   schema: z.object({
     name: z.string(),
-    type: z.string(), // e.g. "Grīdas lampa"
-    order: z.number(), // display order in the collection
+    type: z.string(), // e.g. "Floor lamp"
+    order: z.number(), // display order
     image: z.string(),
     alt: z.string(),
-    tagline: z.string(),
-    size: z.string(),
+    tagline: z.string(), // one line under the name on cards
+    lead: z.string(), // one-paragraph intro on the piece's own page
+    size: z.string().optional(), // left out = "Made to fit your space"
     materials: z.array(z.string()),
     light: z.string().optional(),
     finishes: z.array(z.string()).optional(),
-    lead: z.string(), // one-paragraph intro shown on the detail page
+    // Optional second photo, e.g. the piece in a room.
+    roomImage: z.string().optional(),
+    roomAlt: z.string().optional(),
   }),
 });
 
-export const collections = { products };
+export const collections = { elements };

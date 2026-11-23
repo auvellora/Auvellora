@@ -1,6 +1,6 @@
 ---
-// Trust signals (address, reg. nr., phone) are conventional and expected on
-// Latvian SMB sites. Replace the placeholder values with the real ones.
+// Contact details live in one place: src/site.ts.
+import { EMAIL } from "../site";
 const year = new Date().getFullYear();
 ---
 
@@ -9,40 +9,30 @@ const year = new Date().getFullYear();
   <div class="wrap foot-grid">
     <div class="foot-brand">
       <img src="/images/wordmark-bone.png" alt="Auvellora" width="3001" height="1501" />
-      <p>Apgaismojuma objekti no atrasta koka.<br />Darinām Rīgā, pa vienam.</p>
+      <p>Objects and interiors from reclaimed wood.<br />Made in Latvia, one at a time.</p>
     </div>
 
-    <nav class="foot-col" aria-label="Kājenes navigācija">
-      <h2 class="eyebrow">Lapas</h2>
+    <nav class="foot-col" aria-label="Footer">
+      <h2 class="eyebrow">Pages</h2>
       <ul>
-        <li><a href="/kolekcija/">Kolekcija</a></li>
-        <li><a href="/stasts/">Stāsts</a></li>
-        <li><a href="/kontakti/">Kontakti</a></li>
+        <li><a href="/elements/">Elements</a></li>
+        <li><a href="/interiors/">Interiors</a></li>
+        <li><a href="/story/">Story</a></li>
+        <li><a href="/contact/">Contact</a></li>
       </ul>
     </nav>
 
     <div class="foot-col">
-      <h2 class="eyebrow">Sazināties</h2>
+      <h2 class="eyebrow">Contact</h2>
       <ul>
-        <li><a href="tel:+37125400100">+371 25 400 100</a></li>
-        <li><a href="mailto:studija@auvellora.lv">studija@auvellora.lv</a></li>
-        <li>Miera iela 58, Rīga, LV-1013</li>
-      </ul>
-    </div>
-
-    <div class="foot-col foot-legal">
-      <h2 class="eyebrow">Rekvizīti</h2>
-      <ul>
-        <li>SIA “Auvellora”</li>
-        <li>Reģ. Nr. 40203214567</li>
-        <li>Katrs eksemplārs — unikāls</li>
+        <li><a href={`mailto:${EMAIL}`}>{EMAIL}</a></li>
       </ul>
     </div>
   </div>
 
   <div class="wrap foot-base">
-    <p>© {year} Auvellora. Visas tiesības aizsargātas.</p>
-    <p>Rīga · Latvija</p>
+    <p>© {year} Auvellora</p>
+    <p>Made in Latvia</p>
   </div>
 </footer>
 
@@ -53,23 +43,24 @@ const year = new Date().getFullYear();
     padding-block: clamp(3rem, 6vw, 5rem) 2rem;
   }
   .foot-branch {
-    max-width: 720px;
+    max-width: 420px;
     margin: 0 auto clamp(2.5rem, 6vw, 4rem);
-    opacity: 0.35;
+    opacity: 0.18;
+    mix-blend-mode: screen; /* light drawing on the dark footer */
   }
   .foot-grid {
     display: grid;
-    grid-template-columns: 1.6fr 1fr 1.2fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr;
     gap: clamp(1.5rem, 4vw, 3rem);
     align-items: start;
   }
-  .foot-brand img { height: 30px; width: auto; margin-bottom: 1.1rem; }
+  .foot-brand img { height: 52px; width: auto; margin: -0.6rem 0 0.6rem -0.5rem; }
   .foot-brand p { color: var(--bone); opacity: 0.72; font-size: var(--step--1); line-height: 1.6; }
   .foot-col h2 { margin-bottom: 1rem; }
   .foot-col ul { list-style: none; padding: 0; display: grid; gap: 0.55rem; }
   .foot-col a { font-size: var(--step--1); opacity: 0.82; border-bottom: 1px solid transparent; padding-bottom: 1px; }
   .foot-col a:hover { opacity: 1; border-bottom-color: var(--amber); }
-  .foot-col li { font-size: var(--step--1); opacity: 0.82; }
+  .foot-col li { font-size: var(--step--1); opacity: 0.82; overflow-wrap: anywhere; }
 
   .foot-base {
     display: flex;
@@ -87,7 +78,6 @@ const year = new Date().getFullYear();
     .foot-brand { grid-column: 1 / -1; }
   }
   @media (max-width: 460px) {
-    .foot-grid { grid-template-columns: 1fr; }
     .foot-base { flex-direction: column; gap: 0.25rem; }
   }
 </style>

@@ -1,30 +1,30 @@
 ---
 import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
-import ProductCard from "../components/ProductCard.astro";
+import ElementCard from "../components/ElementCard.astro";
 import BranchDivider from "../components/BranchDivider.astro";
 
-const products = (await getCollection("products")).sort(
+const elements = (await getCollection("elements")).sort(
   (a, b) => a.data.order - b.data.order
 );
-const featured = products.slice(0, 3);
+const featured = elements.slice(0, 2);
 ---
 
 <Base darkHeader={true}>
-  <!-- HERO — nocturne split: the light is the thesis -->
+  <!-- HERO -->
   <section class="hero section-dark">
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <p class="eyebrow">Apgaismojums no atrasta koka</p>
-        <h1 class="hero-title">Gaisma, kas<br />dzīvo kokā.</h1>
+        <p class="eyebrow">Objects and interiors from reclaimed wood</p>
+        <h1 class="hero-title">From found wood,<br />one of a kind.</h1>
         <p class="lede">
-          Auvellora darina apgaismojuma objektus no atrastiem zariem. Katrs zars
-          ir viens vienīgs — un tāds ir arī katrs eksemplārs.
+          We shape branches into objects, and whole spaces, for people who want
+          something no one else can have. From a single lamp to an entire room.
         </p>
         <div class="hero-actions">
-          <a class="btn btn--solid" href="/kolekcija/">Skatīt kolekciju</a>
-          <a class="link-arrow" href="/stasts/">
-            Kā tapšana
+          <a class="btn btn--solid" href="/elements/">See the Elements</a>
+          <a class="link-arrow" href="/interiors/">
+            Explore Interiors
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"
               ><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6"
                 stroke-linecap="round" stroke-linejoin="round"></path></svg
@@ -34,8 +34,8 @@ const featured = products.slice(0, 3);
       </div>
       <div class="hero-figure">
         <img
-          src="/images/nocturne.png"
-          alt="Atrasts zars uz melna paneļa, izgaismots ar siltu gaismu"
+          src="/images/hero-branch.jpg"
+          alt="A found branch on a dark panel, lit with warm light"
           width="332"
           height="667"
           fetchpriority="high"
@@ -48,39 +48,39 @@ const featured = products.slice(0, 3);
   <section class="section section-bone">
     <div class="wrap intro">
       <p class="intro-statement">
-        Mēs neko neizdomājam no jauna. Formu jau ir izveidojis mežs — vējš, laiks
-        un augšana. Mēs tikai atrodam pareizo zaru, notīrām to un pievienojam
-        siltu gaismu.
+        We invent nothing. The form is already there, shaped by wind, weather,
+        and time. We find the right piece of wood, clean it by hand, and give it
+        new life — sometimes as a single lamp, sometimes as an entire room.
       </p>
     </div>
     <BranchDivider tone="ink" />
   </section>
 
-  <!-- FEATURED -->
+  <!-- ELEMENTS -->
   <section class="section section-bone collection">
     <div class="wrap">
       <header class="collection-head">
-        <p class="eyebrow">Kolekcija</p>
-        <h2>Seši objekti,<br />katrs — viens vienīgs.</h2>
+        <p class="eyebrow">Elements</p>
+        <h2>Made, not manufactured.</h2>
       </header>
-      <div class="grid-3">
+      <div class="grid-2">
         {
-          featured.map((p, i) => (
-            <ProductCard
-              slug={p.id}
-              name={p.data.name}
-              type={p.data.type}
-              image={p.data.image}
-              alt={p.data.alt}
-              size={p.data.size}
+          featured.map((e, i) => (
+            <ElementCard
+              slug={e.id}
+              name={e.data.name}
+              type={e.data.type}
+              image={e.data.image}
+              alt={e.data.alt}
+              tagline={e.data.tagline}
               index={i}
             />
           ))
         }
       </div>
       <p class="collection-more">
-        <a class="link-arrow" href="/kolekcija/">
-          Skatīt visu kolekciju
+        <a class="link-arrow" href="/elements/">
+          See all Elements
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"
             ><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6"
               stroke-linecap="round" stroke-linejoin="round"></path></svg
@@ -90,35 +90,57 @@ const featured = products.slice(0, 3);
     </div>
   </section>
 
-  <!-- TIME AS MATERIAL -->
-  <section class="section section-dark material">
+  <!-- INTERIORS -->
+  <section class="section section-dark">
+    <div class="wrap interiors-grid">
+      <div class="interiors-copy reveal">
+        <p class="eyebrow">Interiors</p>
+        <h2>One of a kind,<br />at the scale of a room.</h2>
+        <p>
+          The Elements are where it begins. But the same material and the same
+          care can shape something far larger — a reclaimed-wood wall behind a
+          fireplace, a feature that runs the length of a living room, a garden
+          given form. We take commissions at any scale, from a single piece to a
+          whole house.
+        </p>
+        <a class="btn btn--solid" href="/interiors/">Explore Interiors</a>
+      </div>
+      <div class="interiors-figure reveal">
+        <img
+          src="/images/interiors-keeper.jpg"
+          alt="A Keeper coat stand in a warm living room with a stone fireplace"
+          width="1100"
+          height="1375"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- MATERIAL -->
+  <section class="section section-bone">
     <div class="wrap material-grid">
       <div class="material-figure reveal">
         <img
-          src="/images/about.jpg"
-          alt="Grīdas lampa no zara silti apgaismotā istabā"
-          width="250"
-          height="758"
+          src="/images/bark.jpg"
+          alt="Close-up of weathered birch bark, cracked and marked"
+          width="820"
+          height="1099"
           loading="lazy"
         />
       </div>
       <div class="material-copy reveal">
-        <p class="eyebrow">Materiāls</p>
-        <h2>Laiks padara<br />koku skaistu.</h2>
+        <p class="eyebrow">Material</p>
+        <h2>Beauty in the imperfect.</h2>
         <p>
-          Plaisas, sūnas, nolīdzušas šķautnes — tas, ko parasti uzskata par
-          trūkumu, mums ir vērtība. Katrs zars nāk ar savu vēsturi, un mēs to
-          neslēpjam, bet izceļam.
+          Cracks, moss, worn edges — what's usually called a flaw, we treat as
+          the value. Every branch arrives with its own history, and we bring it
+          forward rather than hide it.
         </p>
         <p>
-          Koku sagatavojam ar rokām: notīrām, noslīpējam un pārklājam ar eļļu vai
-          vasku dabiskā tonī. Nekādas krāsas, nekādas imitācijas — tikai koks tāds,
-          kāds tas ir.
+          We prepare each piece by hand: cleaned, sanded, finished with oil or wax
+          in a natural tone. No paint, no imitation — just wood as it is.
         </p>
-        <div class="material-details">
-          <img src="/images/detail-base.jpg" alt="Zara pamatnes detaļa" width="252" height="378" loading="lazy" />
-          <img src="/images/detail-spot.jpg" alt="Gaismas ķermeņa detaļa uz zara" width="320" height="260" loading="lazy" />
-        </div>
       </div>
     </div>
   </section>
@@ -126,13 +148,13 @@ const featured = products.slice(0, 3);
   <!-- COMMISSION -->
   <section class="section section-bone commission">
     <div class="wrap--narrow commission-inner">
-      <p class="eyebrow">Pēc pasūtījuma</p>
-      <h2>Katrs zars ir viens vienīgs.<br />Tāds būs arī tavējais.</h2>
+      <p class="eyebrow">Commissions</p>
+      <h2>Every branch is one of a kind.<br />So is yours.</h2>
       <p class="lede">
-        Pastāstiet par savu telpu, un mēs atradīsim zaru, kas tur iederēsies.
-        Kopā izvēlamies formu, augstumu un gaismu.
+        Tell us about your space — a corner, a wall, or the whole house.
+        Together we find the wood that belongs in it.
       </p>
-      <a class="btn" href="/kontakti/">Sākt sarunu</a>
+      <a class="btn" href="/contact/">Start a conversation</a>
     </div>
   </section>
 </Base>
@@ -161,14 +183,15 @@ const featured = products.slice(0, 3);
   .hero-figure {
     position: relative;
     justify-self: end;
-    max-width: 420px;
+    max-width: 430px;
+    width: 100%;
   }
   .hero-figure::before {
     content: "";
     position: absolute;
     inset: -14% -10% -6% 8%;
     background: radial-gradient(
-      55% 42% at 42% 44%,
+      55% 42% at 44% 46%,
       rgba(197, 138, 61, 0.42),
       rgba(197, 138, 61, 0) 70%
     );
@@ -180,11 +203,13 @@ const featured = products.slice(0, 3);
     position: relative;
     z-index: 1;
     width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
     border-radius: var(--radius);
   }
 
   /* INTRO */
-  .intro { max-width: 900px; }
+  .intro { max-width: 860px; text-align: center; }
   .intro-statement {
     font-family: var(--serif);
     font-size: var(--step-2);
@@ -194,16 +219,33 @@ const featured = products.slice(0, 3);
     text-wrap: balance;
   }
 
-  /* COLLECTION */
+  /* ELEMENTS */
   .collection { padding-top: 0; }
   .collection-head { margin-bottom: clamp(2rem, 5vw, 3.25rem); }
   .collection-head h2 { font-size: var(--step-3); margin-top: 0.5rem; }
-  .grid-3 {
+  .grid-2 {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: clamp(1.25rem, 3vw, 2.25rem);
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    max-width: 960px;
   }
   .collection-more { margin-top: clamp(2rem, 4vw, 3rem); }
+
+  /* INTERIORS */
+  .interiors-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: center;
+  }
+  .interiors-copy h2 { font-size: var(--step-3); margin: 0.5rem 0 1.25rem; }
+  .interiors-copy p { color: var(--bone); opacity: 0.82; max-width: 48ch; margin-bottom: 1.5rem; }
+  .interiors-figure img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--radius);
+  }
 
   /* MATERIAL */
   .material-grid {
@@ -212,25 +254,24 @@ const featured = products.slice(0, 3);
     gap: clamp(2rem, 6vw, 5rem);
     align-items: center;
   }
-  .material-figure { position: relative; }
+  .material-figure { position: relative; max-width: 400px; }
   .material-figure::before {
     content: "";
     position: absolute;
     inset: -8% -6%;
-    background: radial-gradient(60% 40% at 50% 40%, rgba(197,138,61,0.28), transparent 72%);
+    background: radial-gradient(60% 40% at 50% 42%, rgba(197,138,61,0.22), transparent 72%);
     z-index: 0;
   }
-  .material-figure img { position: relative; z-index: 1; border-radius: var(--radius); }
-  .material-copy h2 { font-size: var(--step-3); margin: 0.5rem 0 1.25rem; }
-  .material-copy p { color: var(--bone); opacity: 0.82; max-width: 46ch; margin-bottom: 1rem; }
-  .material-details {
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 1rem;
-    margin-top: 2rem;
-    max-width: 420px;
+  .material-figure img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-radius: var(--radius);
   }
-  .material-details img { border-radius: var(--radius); width: 100%; }
+  .material-copy h2 { font-size: var(--step-3); margin: 0.5rem 0 1.25rem; }
+  .material-copy p { max-width: 46ch; margin-bottom: 1rem; }
 
   /* COMMISSION */
   .commission-inner { text-align: center; }
@@ -239,13 +280,14 @@ const featured = products.slice(0, 3);
   .commission-inner .btn { margin-inline: auto; }
 
   @media (max-width: 860px) {
-    .hero-grid { grid-template-columns: 1fr; }
+    .hero-grid, .interiors-grid, .material-grid { grid-template-columns: 1fr; }
     .hero-figure { justify-self: start; order: -1; max-width: 340px; }
-    .grid-3 { grid-template-columns: 1fr 1fr; }
-    .material-grid { grid-template-columns: 1fr; }
+    .interiors-figure { max-width: 420px; }
     .material-figure { max-width: 320px; }
   }
   @media (max-width: 560px) {
-    .grid-3 { grid-template-columns: 1fr; }
+    .grid-2 { grid-template-columns: 1fr; }
+    /* phone: keep the headline on the first screen */
+    .hero-figure { max-width: 230px; }
   }
 </style>
