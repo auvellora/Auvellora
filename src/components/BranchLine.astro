@@ -1,0 +1,19 @@
+---
+// A branch with bark texture, drawn across the full width of its container
+// and running off both edges. The drawing is public/images/branch-line.svg
+// (2400 x 120); it is used as a mask, so it takes the surrounding text colour
+// (currentColor) and the wrapper's opacity. On narrow screens it is cropped
+// from the middle, so it always reaches edge to edge and never shows an end.
+---
+
+<div class="branchline" aria-hidden="true"></div>
+
+<style>
+  .branchline {
+    width: 100%;
+    height: clamp(48px, 5vw, 120px);
+    background-color: currentColor;
+    -webkit-mask: url("/images/branch-line.svg") center / cover no-repeat;
+    mask: url("/images/branch-line.svg") center / cover no-repeat;
+  }
+</style>

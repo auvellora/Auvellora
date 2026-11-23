@@ -1,24 +1,22 @@
 ---
-// The signature element: the studio's actual driftwood mark, laid as a
-// horizontal rule between sections. Bone on dark, ink on light.
+// The signature element: a thin branch drawn edge to edge between sections.
+// Ink on light sections, bone on dark ones.
+import BranchLine from "./BranchLine.astro";
+
 interface Props {
   tone?: "ink" | "bone";
-  width?: number; // max px
 }
-const { tone = "ink", width = 620 } = Astro.props;
-const src = tone === "bone" ? "/images/branch-bone.png" : "/images/branch-ink.png";
+const { tone = "ink" } = Astro.props;
 ---
 
-<div class="branch-divider" style={`--bw:${width}px`}>
-  <img class="branch-rule" src={src} alt="" width="852" height="361" aria-hidden="true" />
+<div class:list={["branch-divider", `branch-divider--${tone}`]}>
+  <BranchLine />
 </div>
 
 <style>
   .branch-divider {
     padding-block: clamp(2rem, 5vw, 3.5rem);
   }
-  .branch-divider .branch-rule {
-    max-width: var(--bw);
-    margin-inline: auto;
-  }
+  .branch-divider--ink { color: var(--ink); opacity: 0.55; }
+  .branch-divider--bone { color: var(--bone); opacity: 0.3; }
 </style>

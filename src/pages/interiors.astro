@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import BranchDivider from "../components/BranchDivider.astro";
+import BranchLine from "../components/BranchLine.astro";
 
 const possible = [
   "A reclaimed-wood feature wall - behind a television, a bed, a fireplace.",
@@ -126,7 +127,7 @@ const projectPhotos: { src?: string; alt?: string }[] = [{}, {}];
               </figure>
             ) : (
               <div class="slot slot--empty reveal" aria-hidden="true">
-                <img src="/images/branch-bone.png" alt="" width="852" height="361" />
+                <div class="slot-branch"><BranchLine /></div>
               </div>
             )
           )
@@ -196,7 +197,7 @@ const projectPhotos: { src?: string; alt?: string }[] = [{}, {}];
   .possible-close { color: var(--taupe); margin-top: 1.5rem; max-width: 48ch; }
 
   /* HOW + SLOTS */
-  .how { padding-top: 0; }
+  .how { padding-top: 0; display: flow-root; }
   .slots {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -215,12 +216,10 @@ const projectPhotos: { src?: string; alt?: string }[] = [{}, {}];
     place-items: center;
     background: linear-gradient(160deg, #221d18, #2c2620);
   }
-  .slot--empty img {
-    width: 46%;
-    height: auto;
-    object-fit: contain;
-    opacity: 0.14;
-    mix-blend-mode: screen;
+  .slot-branch {
+    width: 100%;
+    color: var(--bone);
+    opacity: 0.16;
   }
 
   @media (max-width: 860px) {
