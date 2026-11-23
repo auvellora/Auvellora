@@ -1,11 +1,10 @@
 ---
-import { getCollection, render } from "astro:content";
+import { render } from "astro:content";
 import Base from "../../layouts/Base.astro";
+import { getElements } from "../../elements";
 
 export async function getStaticPaths() {
-  const elements = (await getCollection("elements")).sort(
-    (a, b) => a.data.order - b.data.order
-  );
+  const elements = await getElements();
   return elements.map((entry, i) => {
     const prev = elements[(i - 1 + elements.length) % elements.length];
     const next = elements[(i + 1) % elements.length];
@@ -25,7 +24,7 @@ const showPrev = prev.id !== entry.id && prev.id !== next.id;
 const showNext = next.id !== entry.id;
 ---
 
-<Base title={`${d.name} — ${d.type} · Auvellora`} description={d.lead}>
+<Base title={`${d.name} - ${d.type} · Auvellora`} description={d.lead}>
   <article class="pdp section section-bone">
     <div class="wrap pdp-grid">
       <div class="pdp-media">
@@ -52,10 +51,12 @@ const showNext = next.id !== entry.id;
         </div>
 
         <dl class="spec">
-          <div>
-            <dt>Size</dt>
-            <dd>{d.size ?? "Made to fit your space"}</dd>
-          </div>
+          {d.size && (
+            <div>
+              <dt>Size</dt>
+              <dd>{d.size}</dd>
+            </div>
+          )}
           <div>
             <dt>Materials</dt>
             <dd>{d.materials.join(" · ")}</dd>
@@ -72,14 +73,17 @@ const showNext = next.id !== entry.id;
               <dd>{d.finishes.join(" · ")}</dd>
             </div>
           )}
-          <div>
-            <dt>Price</dt>
-            <dd>On request</dd>
-          </div>
+          {d.note && (
+            <div>
+              <dt>Note</dt>
+              <dd>{d.note}</dd>
+            </div>
+          )}
         </dl>
 
-        <p class="unique">Every piece is one of a kind. We choose the branch together with you.</p>
-        <a class="btn btn--solid" href={ask}>Ask about {d.name}</a>
+        <p class="price">Price on request</p>
+        <p class="unique">Every piece is one of a kind. We choose the branch together.</p>
+        <a class="btn btn--solid" href={ask}>Ask about this piece</a>
       </div>
     </div>
 
@@ -156,6 +160,13 @@ const showNext = next.id !== entry.id;
   }
   .spec dd { font-size: var(--step-0); }
 
+  .price {
+    font-size: var(--step--1);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
   .unique {
     font-family: var(--serif);
     font-style: italic;

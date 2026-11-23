@@ -5,8 +5,8 @@ import { EMAIL, FORM_ENDPOINT } from "../site";
 ---
 
 <Base
-  title="Contact — Auvellora"
-  description="Get in touch with Auvellora about an Element or an interior project."
+  title="Contact - Auvellora"
+  description="Whether it's an Element from the collection or an interior made from scratch, write a few lines and we'll get back to you."
 >
   <section class="section section-bone page-head">
     <div class="wrap">
@@ -32,12 +32,12 @@ import { EMAIL, FORM_ENDPOINT } from "../site";
           <h2 class="eyebrow">Interiors</h2>
           <p class="muted">
             Planning something larger? Send a photo of the space and rough
-            dimensions — that's where every project begins.
+            dimensions - that's where every project begins.
           </p>
         </div>
         <div class="info-block">
           <h2 class="eyebrow">Response</h2>
-          <p class="muted">We usually reply within 1–2 business days.</p>
+          <p class="muted">We usually reply within 1-2 business days.</p>
         </div>
       </aside>
 
@@ -77,7 +77,7 @@ import { EMAIL, FORM_ENDPOINT } from "../site";
 
         <button class="btn btn--solid" type="submit">Send enquiry</button>
         <p class="form-note" id="form-note" aria-live="polite">
-          We usually reply within 1–2 business days.
+          We usually reply within 1-2 business days.
         </p>
       </form>
     </div>
@@ -116,7 +116,7 @@ import { EMAIL, FORM_ENDPOINT } from "../site";
       // No form service yet: open the visitor's email app, message ready to send.
       if (!form.dataset.endpoint) {
         const subject = `Enquiry: ${topic} (from ${name})`;
-        const body = `${message}\n\n— ${name}\n${email}`;
+        const body = `${message}\n\n- ${name}\n${email}`;
         location.href =
           `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         note.textContent =
@@ -134,7 +134,7 @@ import { EMAIL, FORM_ENDPOINT } from "../site";
         });
         if (!res.ok) throw new Error(String(res.status));
         form.reset();
-        note.textContent = "Thank you. We'll get back to you within 1–2 business days.";
+        note.textContent = "Thank you. We'll get back to you within 1-2 business days.";
       } catch {
         note.textContent = `That didn't go through. Please write to ${form.dataset.email} instead.`;
       }

@@ -1,7 +1,7 @@
-# Auvellora — website
+# Auvellora - website
 
 A small multi-page site for Auvellora (objects and interiors from reclaimed
-wood), built with [Astro](https://astro.build). Static output — deploys free.
+wood), built with [Astro](https://astro.build). Static output - deploys free.
 
 The text and photos come from the English pages made in October 2026
 (home, story, contact), plus an Elements page, a page per Element and an
@@ -23,28 +23,41 @@ npm run build      # outputs a static site to  dist/
 npm run preview    # preview that build locally
 ```
 
-Everything in `dist/` is plain HTML/CSS/JS — no server required.
+Everything in `dist/` is plain HTML/CSS/JS - no server required.
 
 ## Deploy (free)
 
 Any of these host the `dist/` folder for €0:
 
-- **Cloudflare Pages** — connect the repo, build command `npm run build`, output `dist`.
-- **Netlify** — connect the repo (same settings), or drag the `dist/` folder onto app.netlify.com/drop.
-- **Vercel** — import the repo; it detects Astro automatically.
+- **Cloudflare Pages** - connect the repo, build command `npm run build`, output `dist`.
+- **Netlify** - connect the repo (same settings), or drag the `dist/` folder onto app.netlify.com/drop.
+- **Vercel** - import the repo; it detects Astro automatically.
 
 Then point your domain (e.g. `auvellora.lv`) at the host. Update `site:` in
 `astro.config.mjs` if the domain is different.
 
-## Edit content — no code needed
+## Edit content - no code needed
 
 Each Element is one Markdown file in **`src/content/elements/`** (`rise.md`,
 `keeper.md`). To add a piece, copy a file, change the fields at the top, and
 drop a photo in `public/images/`. The home page, the Elements page and the
-piece's own page update on the next build. Leave out `size` and the page says
-"Made to fit your space". `roomImage` adds a second photo of the piece in a room.
+piece's own page update on the next build. `roomImage` adds a second photo of
+the piece in a room, and `note` adds a line such as "No electrical parts."
+
+Elements 03-06 (`element-03.md` ... `element-06.md`) hold the placeholder
+descriptions from the approved copy. They have `hidden: true`, so they appear
+nowhere on the site. When a piece is made and photographed, give it a name and
+a photo, and change `hidden: true` to `hidden: false`. Element 06 was replaced
+by Keeper.
+
+Copy rules from the approved copy: English only, short hyphens "-" (never long
+dashes), no prices - every piece is "Price on request".
 
 Page text (home, interiors, story, contact) lives in `src/pages/*.astro`.
+
+The Interiors page has two frames reserved for project photos. To fill one, put
+the photo in `public/images/` and add it to `projectPhotos` near the top of
+`src/pages/interiors.astro` (the comment there shows how).
 
 The six pieces from the first, Latvian version of the site are kept in
 `archive/latvian-collection/`. The site doesn't read that folder.
@@ -58,21 +71,20 @@ A static site can't send email by itself. Until a form service is set,
 written out to that address, so no enquiry is lost. To receive enquiries
 straight from the form instead, set `FORM_ENDPOINT` in `src/site.ts`:
 
-- **Formspree** — create a free form at formspree.io and paste its URL.
-- **Netlify Forms** — if the site is hosted on Netlify.
+- **Formspree** - create a free form at formspree.io and paste its URL.
+- **Netlify Forms** - if the site is hosted on Netlify.
 
-Links like "Ask about Rise" open the contact page with the topic chosen and
+"Ask about this piece" opens the contact page with the topic chosen and
 the message started.
 
 ## Still to check
 
-- **Rise sizes and light** (`src/content/elements/rise.md`) are carried over
-  from the earlier lamp "Svece", which has the same design. Keeper has no size
-  yet. Confirm or correct both.
+- **Keeper's exact height** (`src/content/elements/keeper.md`): the copy says
+  "around 170-180 cm", to be confirmed.
 - **Photos**: the hero and story photos are small (about 330 px and 250 px
   wide). Swap in full-resolution files with the same names when you have them.
-- **Interiors** has one photo so far. Real projects will make that page much
-  stronger.
+- **Interiors** has one photo and two empty frames. Real project photos will
+  make that page much stronger.
 
 ## Type & colour
 

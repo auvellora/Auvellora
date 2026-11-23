@@ -43,11 +43,18 @@
             "type": "string"
           }
         },
+        "note": {
+          "type": "string"
+        },
         "roomImage": {
           "type": "string"
         },
         "roomAlt": {
           "type": "string"
+        },
+        "hidden": {
+          "type": "boolean",
+          "default": false
         },
         "$schema": {
           "type": "string"

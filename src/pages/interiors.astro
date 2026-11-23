@@ -2,45 +2,65 @@
 import Base from "../layouts/Base.astro";
 import BranchDivider from "../components/BranchDivider.astro";
 
-// Every line here comes from wording already used on the home, story and
-// contact pages, so the Interiors page promises nothing new.
+const possible = [
+  "A reclaimed-wood feature wall - behind a television, a bed, a fireplace.",
+  "A shelving structure that runs the length of a room.",
+  "A room divider, a headboard, a stair, a ceiling detail.",
+  "A garden or terrace given the same treatment as an interior.",
+  "A whole room, or a whole house, considered as one material story.",
+];
+
 const steps = [
   {
     n: "01",
-    t: "Tell us about the space",
-    d: "Send a photo of the space and rough dimensions — a corner, a wall, or the whole house. That's where every project begins.",
+    t: "Conversation",
+    d: "You tell us about the space and what you have in mind. Photos and rough dimensions are enough to begin.",
   },
   {
     n: "02",
-    t: "We find the wood",
-    d: "We look for wood with a form of its own, in forests, along riverbanks, on the seashore. Together we find the wood that belongs in your space.",
+    t: "Design",
+    d: "We propose a direction: form, scale, how the wood meets the room, how light plays a part. Nothing is built until it feels right.",
   },
   {
     n: "03",
-    t: "Made by hand",
-    d: "We prepare, shape and finish every piece by hand in Latvia, with oil or wax in a natural tone. No paint, no imitation.",
+    t: "Sourcing & making",
+    d: "We find the wood the piece needs and build it by hand, keeping you in the loop as it takes shape.",
+  },
+  {
+    n: "04",
+    t: "Installation",
+    d: "We deliver and install, and leave the piece finished, sealed, and ready to live with.",
   },
 ];
+
+// Reserved for future project photos. Put a photo in public/images/ and its
+// path in `src` (plus a short `alt`), e.g.
+//   { src: "/images/project-fireplace-wall.jpg", alt: "A reclaimed-wood wall behind a fireplace" }
+// Slots without a photo show a quiet placeholder frame.
+const projectPhotos: { src?: string; alt?: string }[] = [{}, {}];
 ---
 
 <Base
-  title="Interiors — Auvellora"
-  description="Commissions in reclaimed wood at any scale, from a single piece to a whole house. Made by hand in Latvia."
+  title="Interiors - Auvellora"
+  description="The Elements show what found wood can become at the scale of an object. Interiors is the same idea, without the ceiling - feature pieces, walls, and whole rooms shaped from reclaimed wood."
 >
   <section class="section section-bone page-head page-head--center">
     <div class="wrap--narrow">
       <p class="eyebrow">Interiors</p>
-      <h1>One of a kind, at the scale of a room.</h1>
+      <h1>From a single piece to an entire space.</h1>
       <p class="lede">
-        The Elements are where it begins. The same material and the same care
-        can shape something far larger.
+        The Elements show what found wood can become at the scale of an object.
+        Interiors is the same idea, without the ceiling - feature pieces, walls,
+        and whole rooms shaped from reclaimed wood, made for one specific space
+        and one client.
       </p>
     </div>
   </section>
 
+  <!-- THE IDEA -->
   <section class="section section-dark">
-    <div class="wrap interiors-grid">
-      <div class="interiors-figure reveal">
+    <div class="wrap idea-grid">
+      <div class="idea-figure reveal">
         <img
           src="/images/interiors-keeper.jpg"
           alt="A Keeper coat stand in a warm living room with a stone fireplace"
@@ -49,29 +69,43 @@ const steps = [
           loading="lazy"
         />
       </div>
-      <div class="interiors-copy reveal">
-        <p class="eyebrow">Commissions</p>
-        <h2>From a single piece<br />to a whole house.</h2>
-        <p>
-          A reclaimed-wood wall behind a fireplace, a feature that runs the length
-          of a living room, a garden given form. We take commissions at any scale.
-        </p>
-        <p>
-          Every branch arrives with its own history, and no two are alike. So a
-          room made with them is one of a kind too: there is no second exactly
-          the same, and there never will be.
+      <div class="idea-copy reveal">
+        <p class="eyebrow">The idea</p>
+        <p class="idea-statement">
+          A factory makes a thousand identical things. We make one - and when that
+          one is built for your space, from wood chosen for it, there is nothing
+          else like it anywhere. That's what a commission is: not a product you
+          pick from a shelf, but a piece that could only exist in your home.
         </p>
       </div>
     </div>
   </section>
 
+  <!-- WHAT'S POSSIBLE -->
   <section class="section section-bone">
+    <div class="wrap possible-grid">
+      <header>
+        <h2>What's possible</h2>
+      </header>
+      <div>
+        <ul class="possible-list">
+          {possible.map((item) => <li class="reveal">{item}</li>)}
+        </ul>
+        <p class="possible-close">
+          We don't set a limit on scale. If it can be made from found wood, it's
+          worth a conversation.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW A COMMISSION WORKS -->
+  <section class="section section-bone how">
     <div class="wrap">
       <header class="steps-head">
-        <p class="eyebrow">How a project begins</p>
-        <h2>From your space to the right wood.</h2>
+        <h2>How a commission works</h2>
       </header>
-      <ol class="steps" style="--cols: 3">
+      <ol class="steps">
         {
           steps.map((s) => (
             <li class="step reveal">
@@ -82,35 +116,116 @@ const steps = [
           ))
         }
       </ol>
+
+      <div class="slots" aria-label="Project photos">
+        {
+          projectPhotos.map((p) =>
+            p.src ? (
+              <figure class="slot reveal">
+                <img src={p.src} alt={p.alt ?? ""} loading="lazy" />
+              </figure>
+            ) : (
+              <div class="slot slot--empty reveal" aria-hidden="true">
+                <img src="/images/branch-bone.png" alt="" width="852" height="361" />
+              </div>
+            )
+          )
+        }
+      </div>
     </div>
     <BranchDivider tone="ink" />
     <div class="wrap--narrow cta-foot">
-      <h2>Planning something larger?</h2>
-      <p>Send us a photo of the space and rough dimensions, and we'll start from there.</p>
+      <h2>Have a space in mind?</h2>
+      <p>From a single wall to a whole house, it starts with one conversation.</p>
       <a class="btn" href="/contact/?interest=interior">Start a conversation</a>
     </div>
   </section>
 </Base>
 
 <style>
-  .interiors-grid {
+  /* THE IDEA */
+  .idea-grid {
     display: grid;
     grid-template-columns: 0.9fr 1.1fr;
     gap: clamp(2rem, 6vw, 5rem);
     align-items: center;
   }
-  .interiors-figure img {
+  .idea-figure img {
     width: 100%;
     aspect-ratio: 4 / 5;
     object-fit: cover;
     border-radius: var(--radius);
   }
-  .interiors-copy h2 { font-size: var(--step-3); margin: 0.5rem 0 1.25rem; }
-  .interiors-copy p { color: var(--bone); opacity: 0.82; max-width: 48ch; margin-bottom: 1.15rem; }
+  .idea-statement {
+    font-family: var(--serif);
+    font-size: var(--step-2);
+    line-height: 1.3;
+    font-weight: 330;
+    letter-spacing: -0.01em;
+    color: var(--bone);
+    margin-top: 1rem;
+    max-width: 30ch;
+  }
+
+  /* WHAT'S POSSIBLE */
+  .possible-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: start;
+  }
+  .possible-grid h2 { font-size: var(--step-3); }
+  .possible-list { list-style: none; padding: 0; border-top: 1px solid var(--line-ink); }
+  .possible-list li {
+    font-family: var(--serif);
+    font-size: var(--step-1);
+    line-height: 1.35;
+    padding: 1rem 0 1rem 1.6rem;
+    border-bottom: 1px solid var(--line-ink);
+    position: relative;
+  }
+  .possible-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 1.55em;
+    width: 0.7rem;
+    height: 1px;
+    background: var(--amber);
+  }
+  .possible-close { color: var(--taupe); margin-top: 1.5rem; max-width: 48ch; }
+
+  /* HOW + SLOTS */
+  .how { padding-top: 0; }
+  .slots {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(1rem, 2.5vw, 2rem);
+    margin-top: clamp(3rem, 7vw, 5rem);
+  }
+  .slot {
+    margin: 0;
+    aspect-ratio: 3 / 2;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .slot img { width: 100%; height: 100%; object-fit: cover; }
+  .slot--empty {
+    display: grid;
+    place-items: center;
+    background: linear-gradient(160deg, #221d18, #2c2620);
+  }
+  .slot--empty img {
+    width: 46%;
+    height: auto;
+    object-fit: contain;
+    opacity: 0.14;
+    mix-blend-mode: screen;
+  }
 
   @media (max-width: 860px) {
-    .interiors-grid { grid-template-columns: 1fr; }
-    .interiors-figure { max-width: 420px; }
-    .steps { --cols: 1; }
+    .idea-grid, .possible-grid { grid-template-columns: 1fr; }
+    .idea-figure { max-width: 420px; }
+    .slots { grid-template-columns: 1fr; }
   }
 </style>

@@ -1,25 +1,23 @@
 ---
-import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import ElementCard from "../../components/ElementCard.astro";
 import BranchDivider from "../../components/BranchDivider.astro";
+import { getElements } from "../../elements";
 
-const elements = (await getCollection("elements")).sort(
-  (a, b) => a.data.order - b.data.order
-);
+const elements = await getElements();
 ---
 
 <Base
-  title="Elements — Auvellora"
-  description="Objects made from found wood: a floor lamp and a coat stand, each made by hand in Latvia. Every piece is one of a kind."
+  title="Elements - Auvellora"
+  description="Objects that begin with a single branch. Prices on request - each one is one of a kind."
 >
   <section class="section section-bone page-head">
     <div class="wrap">
       <p class="eyebrow">Elements</p>
-      <h1>Made, not manufactured.</h1>
+      <h1>Finished pieces from found wood.</h1>
       <p class="lede">
-        Objects that begin with a found branch. Prices on request, because every
-        piece is one of a kind.
+        Objects that begin with a single branch. Prices on request - each one is
+        one of a kind.
       </p>
     </div>
   </section>
@@ -44,11 +42,7 @@ const elements = (await getCollection("elements")).sort(
     </div>
     <BranchDivider tone="ink" />
     <div class="wrap--narrow cta-foot">
-      <h2>Not quite the one?</h2>
-      <p>
-        Every Element can be adapted. We choose the height, the branch and the
-        light together with you.
-      </p>
+      <p>Every Element can be adapted - height, branch, and light chosen together.</p>
       <a class="btn" href="/contact/?interest=element">Tell us about your space</a>
     </div>
   </section>

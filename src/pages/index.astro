@@ -1,13 +1,10 @@
 ---
-import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import ElementCard from "../components/ElementCard.astro";
 import BranchDivider from "../components/BranchDivider.astro";
+import { getElements } from "../elements";
 
-const elements = (await getCollection("elements")).sort(
-  (a, b) => a.data.order - b.data.order
-);
-const featured = elements.slice(0, 2);
+const featured = (await getElements()).slice(0, 2);
 ---
 
 <Base darkHeader={true}>
@@ -50,7 +47,7 @@ const featured = elements.slice(0, 2);
       <p class="intro-statement">
         We invent nothing. The form is already there, shaped by wind, weather,
         and time. We find the right piece of wood, clean it by hand, and give it
-        new life — sometimes as a single lamp, sometimes as an entire room.
+        new life - sometimes as a single lamp, sometimes as an entire room.
       </p>
     </div>
     <BranchDivider tone="ink" />
@@ -62,6 +59,10 @@ const featured = elements.slice(0, 2);
       <header class="collection-head">
         <p class="eyebrow">Elements</p>
         <h2>Made, not manufactured.</h2>
+        <p class="collection-sub">
+          Finished pieces, each built from a single found branch and impossible
+          to repeat.
+        </p>
       </header>
       <div class="grid-2">
         {
@@ -98,7 +99,7 @@ const featured = elements.slice(0, 2);
         <h2>One of a kind,<br />at the scale of a room.</h2>
         <p>
           The Elements are where it begins. But the same material and the same
-          care can shape something far larger — a reclaimed-wood wall behind a
+          care can shape something far larger - a reclaimed-wood wall behind a
           fireplace, a feature that runs the length of a living room, a garden
           given form. We take commissions at any scale, from a single piece to a
           whole house.
@@ -133,13 +134,13 @@ const featured = elements.slice(0, 2);
         <p class="eyebrow">Material</p>
         <h2>Beauty in the imperfect.</h2>
         <p>
-          Cracks, moss, worn edges — what's usually called a flaw, we treat as
+          Cracks, moss, worn edges - what's usually called a flaw, we treat as
           the value. Every branch arrives with its own history, and we bring it
           forward rather than hide it.
         </p>
         <p>
           We prepare each piece by hand: cleaned, sanded, finished with oil or wax
-          in a natural tone. No paint, no imitation — just wood as it is.
+          in a natural tone. No paint, no imitation - just wood as it is.
         </p>
       </div>
     </div>
@@ -151,7 +152,7 @@ const featured = elements.slice(0, 2);
       <p class="eyebrow">Commissions</p>
       <h2>Every branch is one of a kind.<br />So is yours.</h2>
       <p class="lede">
-        Tell us about your space — a corner, a wall, or the whole house.
+        Tell us about your space - a corner, a wall, or the whole house.
         Together we find the wood that belongs in it.
       </p>
       <a class="btn" href="/contact/">Start a conversation</a>
@@ -223,6 +224,7 @@ const featured = elements.slice(0, 2);
   .collection { padding-top: 0; }
   .collection-head { margin-bottom: clamp(2rem, 5vw, 3.25rem); }
   .collection-head h2 { font-size: var(--step-3); margin-top: 0.5rem; }
+  .collection-sub { color: var(--taupe); max-width: 46ch; margin-top: 1rem; }
   .grid-2 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

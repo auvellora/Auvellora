@@ -19,9 +19,12 @@ const elements = defineCollection({
     materials: z.array(z.string()),
     light: z.string().optional(),
     finishes: z.array(z.string()).optional(),
+    note: z.string().optional(), // e.g. "No electrical parts."
     // Optional second photo, e.g. the piece in a room.
     roomImage: z.string().optional(),
     roomAlt: z.string().optional(),
+    // true = kept ready but not shown anywhere on the site.
+    hidden: z.boolean().default(false),
   }),
 });
 

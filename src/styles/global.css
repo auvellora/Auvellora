@@ -1,5 +1,5 @@
 /* ============================================================
-   AUVELLORA — global tokens & base
+   AUVELLORA - global tokens & base
    Palette sampled from the brand assets:
    ink #1E1A17 · bone #E5DBCF · amber #C58A3D (the 2700K light)
    Type: Fraunces (display serif, matches the wordmark) +
@@ -92,7 +92,7 @@ p a:hover { text-decoration-color: var(--amber); }
 .section-dark h1, .section-dark h2, .section-dark h3 { color: var(--bone); }
 .section-bone { background: var(--bone); }
 
-/* buttons — say what happens */
+/* buttons - say what happens */
 .btn {
   display: inline-flex; align-items: center; gap: 0.6em;
   font-family: var(--sans); font-size: var(--step--1);
@@ -117,7 +117,7 @@ p a:hover { text-decoration-color: var(--amber); }
 .link-arrow:hover { gap: 0.85em; }
 .link-arrow svg { width: 1em; height: 1em; }
 
-/* the driftwood divider — the signature line */
+/* the driftwood divider - the signature line */
 .branch-rule {
   display: block; width: 100%;
   opacity: 0.5;
