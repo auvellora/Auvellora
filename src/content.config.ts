@@ -23,6 +23,8 @@ const elements = defineCollection({
     // Optional second photo, e.g. the piece in a room.
     roomImage: z.string().optional(),
     roomAlt: z.string().optional(),
+    // Optional further photos (close-ups, details), shown after the room photo.
+    morePhotos: z.array(z.object({ src: z.string(), alt: z.string() })).optional(),
     // true = kept ready but not shown anywhere on the site.
     hidden: z.boolean().default(false),
   }),

@@ -52,6 +52,25 @@
         "roomAlt": {
           "type": "string"
         },
+        "morePhotos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "src": {
+                "type": "string"
+              },
+              "alt": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "src",
+              "alt"
+            ],
+            "additionalProperties": false
+          }
+        },
         "hidden": {
           "type": "boolean",
           "default": false

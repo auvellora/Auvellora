@@ -14,6 +14,9 @@ materials:
 light: "Warm white, 2700 K · dimmable"
 roomImage: "/images/rise-room.jpg"
 roomAlt: "Rise glowing in a calm living room, beside a stone ledge and a sofa"
+morePhotos:
+  - src: "/images/rise-detail.jpg"
+    alt: "Close-up of Rise: rough birch bark with warm light running through a groove in the wood"
 ---
 
 The base is deliberately heavy and plain, so all the attention stays on the branch. The line of light isn't straight - it bends the way the tree grew. At home in a corner beside a chair, or along a wall where a single vertical accent has room to breathe.

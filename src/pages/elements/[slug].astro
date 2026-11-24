@@ -38,6 +38,13 @@ const showNext = next.id !== entry.id;
             </div>
           )
         }
+        {
+          d.morePhotos?.map((p) => (
+            <div class="pdp-figure pdp-figure--room">
+              <img src={p.src} alt={p.alt} width="1000" height="1250" loading="lazy" />
+            </div>
+          ))
+        }
       </div>
 
       <div class="pdp-meta">

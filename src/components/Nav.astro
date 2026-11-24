@@ -12,13 +12,13 @@ const links = [
 ];
 const isActive = (href: string) =>
   href === "/" ? path === "/" : path.startsWith(href);
-const wordmark = dark ? "/images/wordmark-bone.png" : "/images/wordmark-ink.png";
+const wordmark = dark ? "/images/wordmark-bone.svg" : "/images/wordmark-ink.svg";
 ---
 
 <header class:list={["site-head", { "site-head--dark": dark }]}>
   <div class="wrap head-inner">
     <a class="brand" href="/" aria-label="Auvellora home">
-      <img src={wordmark} alt="Auvellora" width="3001" height="1501" />
+      <img src={wordmark} alt="Auvellora" width="2679" height="910" />
     </a>
 
     <nav class="nav" aria-label="Main">
@@ -78,8 +78,10 @@ const wordmark = dark ? "/images/wordmark-bone.png" : "/images/wordmark-ink.png"
     padding-block: 0.9rem;
   }
   .brand img {
-    height: 60px;
+    display: block;
+    height: 36px;
     width: auto;
+    transform: translateY(5px); /* the roots hang low: line the lettering up with the menu */
   }
   .nav ul {
     display: flex;

@@ -31,10 +31,10 @@ const featured = (await getElements()).slice(0, 2);
       </div>
       <div class="hero-figure">
         <img
-          src="/images/hero-branch.jpg"
-          alt="A found branch on a dark panel, lit with warm light"
-          width="332"
-          height="667"
+          src="/images/rise-room.jpg"
+          alt="Rise, a floor lamp from a single birch branch, glowing in a calm living room"
+          width="1000"
+          height="1250"
           fetchpriority="high"
         />
       </div>
@@ -123,10 +123,10 @@ const featured = (await getElements()).slice(0, 2);
     <div class="wrap material-grid">
       <div class="material-figure reveal">
         <img
-          src="/images/bark.jpg"
-          alt="Close-up of weathered birch bark, cracked and marked"
-          width="820"
-          height="1099"
+          src="/images/rise-detail.jpg"
+          alt="Close-up of Rise: rough birch bark with warm light running through a groove in the wood"
+          width="900"
+          height="1125"
           loading="lazy"
         />
       </div>
@@ -283,13 +283,21 @@ const featured = (await getElements()).slice(0, 2);
 
   @media (max-width: 860px) {
     .hero-grid, .interiors-grid, .material-grid { grid-template-columns: 1fr; }
-    .hero-figure { justify-self: start; order: -1; max-width: 340px; }
+    /* one column: headline and intro, then the photo, then the buttons.
+       The text block "dissolves" so the photo can sit inside it. */
+    .hero-grid { row-gap: 0; }
+    .hero-copy { display: contents; }
+    .hero-figure {
+      order: 1;
+      justify-self: start;
+      max-width: 420px;
+      margin-top: clamp(1.75rem, 5vw, 2.5rem);
+    }
+    .hero-actions { order: 2; }
     .interiors-figure { max-width: 420px; }
     .material-figure { max-width: 320px; }
   }
   @media (max-width: 560px) {
     .grid-2 { grid-template-columns: 1fr; }
-    /* phone: keep the headline on the first screen */
-    .hero-figure { max-width: 230px; }
   }
 </style>
