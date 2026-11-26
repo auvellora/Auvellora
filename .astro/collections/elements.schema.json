@@ -46,12 +46,6 @@
         "note": {
           "type": "string"
         },
-        "roomImage": {
-          "type": "string"
-        },
-        "roomAlt": {
-          "type": "string"
-        },
         "morePhotos": {
           "type": "array",
           "items": {

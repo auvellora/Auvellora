@@ -1,11 +1,11 @@
 ---
-# PLACEHOLDER - not yet made. Hidden from the site until the piece is made
+# CONCEPT from the approved copy (placeholder, not yet made). Hidden from the site until the piece is made
 # and photographed: then give it a name, a photo, and set hidden: false.
 # (Was "Dvini" in the Latvian collection; the photo is a low-res concept.)
 hidden: true
-name: "Element 03"
+name: "Concept: two branches"
 type: "Floor lamp"
-order: 3
+order: 5
 image: "/images/dvini.jpg"
 alt: "Two branches side by side with a narrow line of warm light between them"
 tagline: "Two branches, light between them."

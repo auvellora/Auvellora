@@ -1,10 +1,10 @@
 ---
-# PLACEHOLDER - superseded by Keeper. Hidden unless wanted.
+# CONCEPT from the approved copy - superseded by Keeper. Hidden unless wanted.
 # (Was "Birzs" in the Latvian collection; the photo is a low-res concept.)
 hidden: true
-name: "Element 06"
+name: "Concept: grove coat rack"
 type: "Coat rack"
-order: 6
+order: 8
 image: "/images/birzs.jpg"
 alt: "Several branches rising from one base like a small grove, with wooden pegs for coats"
 tagline: "A small grove by the door."

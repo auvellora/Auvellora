@@ -32,13 +32,6 @@ const showNext = next.id !== entry.id;
           <img src={d.image} alt={d.alt} width="1000" height="1250" fetchpriority="high" />
         </div>
         {
-          d.roomImage && (
-            <div class="pdp-figure pdp-figure--room">
-              <img src={d.roomImage} alt={d.roomAlt ?? ""} width="1000" height="1250" loading="lazy" />
-            </div>
-          )
-        }
-        {
           d.morePhotos?.map((p) => (
             <div class="pdp-figure pdp-figure--room">
               <img src={p.src} alt={p.alt} width="1000" height="1250" loading="lazy" />

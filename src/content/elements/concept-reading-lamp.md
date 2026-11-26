@@ -1,11 +1,11 @@
 ---
-# PLACEHOLDER - not yet made. Hidden from the site until the piece is made
+# CONCEPT from the approved copy (placeholder, not yet made). Hidden from the site until the piece is made
 # and photographed: then give it a name, a photo, and set hidden: false.
 # (Was "Stars" in the Latvian collection; the photo is a low-res concept.)
 hidden: true
-name: "Element 05"
+name: "Concept: reading lamp"
 type: "Reading lamp"
-order: 5
+order: 7
 image: "/images/stars.jpg"
 alt: "A branch with one adjustable reading light beside a bench"
 tagline: "One head. Points where you need it."

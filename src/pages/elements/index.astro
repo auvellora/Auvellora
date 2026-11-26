@@ -24,7 +24,7 @@ const elements = await getElements();
 
   <section class="section section-bone collection-grid">
     <div class="wrap">
-      <div class:list={["grid", { "grid--wide": elements.length >= 3 }]}>
+      <div class:list={["grid", { "grid--wide": elements.length === 3 || elements.length >= 5 }]}>
         {
           elements.map((e, i) => (
             <ElementCard
@@ -56,7 +56,7 @@ const elements = await getElements();
     gap: clamp(1.5rem, 3vw, 2.5rem) clamp(1.25rem, 3vw, 2.25rem);
     max-width: 960px;
   }
-  /* three or more pieces: three columns, full width */
+  /* three pieces, or five and more: three columns; two or four: two columns */
   .grid--wide { --cols: 3; max-width: none; }
   @media (max-width: 860px) { .grid--wide { --cols: 2; } }
   @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }

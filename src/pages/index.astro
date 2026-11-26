@@ -4,7 +4,7 @@ import ElementCard from "../components/ElementCard.astro";
 import BranchDivider from "../components/BranchDivider.astro";
 import { getElements } from "../elements";
 
-const featured = (await getElements()).slice(0, 2);
+const featured = (await getElements()).slice(0, 4); // up to four, in a 2 x 2 grid
 ---
 
 <Base darkHeader={true}>

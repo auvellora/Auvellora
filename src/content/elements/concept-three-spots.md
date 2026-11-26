@@ -1,11 +1,11 @@
 ---
-# PLACEHOLDER - not yet made. Hidden from the site until the piece is made
+# CONCEPT from the approved copy (placeholder, not yet made). Hidden from the site until the piece is made
 # and photographed: then give it a name, a photo, and set hidden: false.
 # (Was "Zvaigznajs" in the Latvian collection; the photo is a low-res concept.)
 hidden: true
-name: "Element 04"
+name: "Concept: three spots"
 type: "Floor lamp"
-order: 4
+order: 6
 image: "/images/zvaigznajs.jpg"
 alt: "A forked branch with three small adjustable lights"
 tagline: "Three points of light on one branch."
