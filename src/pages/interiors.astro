@@ -1,7 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
 import BranchDivider from "../components/BranchDivider.astro";
-import BranchLine from "../components/BranchLine.astro";
 
 const possible = [
   "A reclaimed-wood feature wall - behind a television, a bed, a fireplace.",
@@ -34,11 +33,11 @@ const steps = [
   },
 ];
 
-// Reserved for future project photos. Put a photo in public/images/ and its
-// path in `src` (plus a short `alt`), e.g.
+// Photos of finished interior projects, shown under "How a commission works"
+// (two side by side). Empty for now, so nothing shows. To add one, put the
+// photo in public/images/ and list it here, e.g.
 //   { src: "/images/project-fireplace-wall.jpg", alt: "A reclaimed-wood wall behind a fireplace" }
-// Slots without a photo show a quiet placeholder frame.
-const projectPhotos: { src?: string; alt?: string }[] = [{}, {}];
+const projectPhotos: { src: string; alt: string }[] = [];
 ---
 
 <Base
@@ -118,21 +117,17 @@ const projectPhotos: { src?: string; alt?: string }[] = [{}, {}];
         }
       </ol>
 
-      <div class="slots" aria-label="Project photos">
-        {
-          projectPhotos.map((p) =>
-            p.src ? (
+      {
+        projectPhotos.length > 0 && (
+          <div class="slots" aria-label="Project photos">
+            {projectPhotos.map((p) => (
               <figure class="slot reveal">
-                <img src={p.src} alt={p.alt ?? ""} loading="lazy" />
+                <img src={p.src} alt={p.alt} loading="lazy" />
               </figure>
-            ) : (
-              <div class="slot slot--empty reveal" aria-hidden="true">
-                <div class="slot-branch"><BranchLine /></div>
-              </div>
-            )
-          )
-        }
-      </div>
+            ))}
+          </div>
+        )
+      }
     </div>
     <BranchDivider tone="ink" />
     <div class="wrap--narrow cta-foot">
@@ -211,16 +206,6 @@ const projectPhotos: { src?: string; alt?: string }[] = [{}, {}];
     overflow: hidden;
   }
   .slot img { width: 100%; height: 100%; object-fit: cover; }
-  .slot--empty {
-    display: grid;
-    place-items: center;
-    background: linear-gradient(160deg, #221d18, #2c2620);
-  }
-  .slot-branch {
-    width: 100%;
-    color: var(--bone);
-    opacity: 0.16;
-  }
 
   @media (max-width: 860px) {
     .idea-grid, .possible-grid { grid-template-columns: 1fr; }
