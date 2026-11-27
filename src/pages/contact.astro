@@ -79,6 +79,9 @@ import { EMAIL, FORM_ENDPOINT } from "../site";
         <p class="form-note" id="form-note" aria-live="polite">
           We usually reply within 1-2 business days.
         </p>
+        <p class="form-privacy">
+          We use your details only to answer your enquiry. See our <a href="/privacy/">Privacy Policy</a>.
+        </p>
       </form>
     </div>
   </section>
@@ -192,6 +195,8 @@ import { EMAIL, FORM_ENDPOINT } from "../site";
   }
   .form .btn { margin-top: 0.5rem; }
   .form-note { font-size: var(--step--1); color: var(--taupe); margin-top: 1rem; }
+  .form-privacy { font-size: var(--step--1); color: var(--taupe); margin-top: 0.35rem; }
+  .form-privacy a { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--amber); }
 
   @media (max-width: 860px) {
     .contact-grid { grid-template-columns: 1fr; }

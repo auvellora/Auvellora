@@ -1,0 +1,134 @@
+---
+// Layout for the policy pages (src/pages/privacy.md, src/pages/terms.md).
+// The text lives in the Markdown files; this adds the page header, the
+// business details from src/site.ts and, for the Terms, the withdrawal form.
+import Base from "./Base.astro";
+import { COMPANY, EMAIL, POLICIES_UPDATED } from "../site";
+
+const { frontmatter } = Astro.props;
+const TODO = "[to be added]";
+const name = COMPANY.legalName || TODO;
+const regNo = COMPANY.regNo || TODO;
+const address = COMPANY.address || TODO;
+---
+
+<Base title={`${frontmatter.title} - Auvellora`} description={frontmatter.description}>
+  <section class="section section-bone page-head">
+    <div class="wrap--narrow">
+      <p class="eyebrow">Legal</p>
+      <h1>{frontmatter.title}</h1>
+      <p class="updated">Last updated {POLICIES_UPDATED}</p>
+    </div>
+  </section>
+
+  <section class="section section-bone legal">
+    <div class="wrap--narrow">
+      <dl class="company" aria-label="Business details">
+        <div><dt>Business</dt><dd class:list={{ todo: !COMPANY.legalName }}>{name}</dd></div>
+        <div><dt>Registration no.</dt><dd class:list={{ todo: !COMPANY.regNo }}>{regNo}</dd></div>
+        <div><dt>Registered address</dt><dd class:list={{ todo: !COMPANY.address }}>{address}</dd></div>
+        {COMPANY.vatNo && <div><dt>VAT no.</dt><dd>{COMPANY.vatNo}</dd></div>}
+        <div><dt>Email</dt><dd><a href={`mailto:${EMAIL}`}>{EMAIL}</a></dd></div>
+      </dl>
+
+      <div class="legal-prose">
+        <slot />
+      </div>
+
+      {
+        frontmatter.withdrawalForm && (
+          <section class="withdrawal" aria-labelledby="withdrawal-form">
+            <h2 id="withdrawal-form">Withdrawal form</h2>
+            <p class="muted">Fill in and send this form only if you want to withdraw from the contract (see section 6). An email saying the same is just as valid.</p>
+            <div class="form-box">
+              <p>To: {name}, {address}, {EMAIL}</p>
+              <p>
+                I/We (*) hereby give notice that I/We (*) withdraw from my/our (*) contract of
+                sale of the following goods (*) / for the provision of the following service (*):
+              </p>
+              <p class="line">&nbsp;</p>
+              <p>Ordered on (*) / received on (*):</p>
+              <p class="line">&nbsp;</p>
+              <p>Name of consumer(s):</p>
+              <p class="line">&nbsp;</p>
+              <p>Address of consumer(s):</p>
+              <p class="line">&nbsp;</p>
+              <p>Signature of consumer(s) (only if this form is sent on paper):</p>
+              <p class="line">&nbsp;</p>
+              <p>Date:</p>
+              <p class="line">&nbsp;</p>
+              <p class="muted">(*) Delete as appropriate.</p>
+            </div>
+          </section>
+        )
+      }
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-head .updated { color: var(--taupe); font-size: var(--step--1); }
+  .legal { padding-top: 0; }
+
+  .company {
+    border-top: 1px solid var(--line-ink);
+    margin-bottom: clamp(2rem, 5vw, 3rem);
+  }
+  .company > div {
+    display: grid;
+    grid-template-columns: 11rem 1fr;
+    gap: 1rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--line-ink);
+  }
+  .company dt {
+    font-size: var(--step--1);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--taupe);
+  }
+  .company a { border-bottom: 1px solid var(--amber); }
+  .todo { color: #9a5a1c; font-style: italic; }
+
+  .legal-prose :global(h2) {
+    font-size: var(--step-2);
+    margin: 2.4rem 0 0.8rem;
+  }
+  .legal-prose :global(h3),
+  .legal-prose :global(p > strong:only-child) {
+    display: block;
+    font-family: var(--sans);
+    font-size: var(--step-0);
+    font-weight: 600;
+    margin: 1.4rem 0 0.4rem;
+  }
+  .legal-prose :global(p),
+  .legal-prose :global(li) { max-width: 68ch; }
+  .legal-prose :global(p) { margin-bottom: 0.9rem; }
+  .legal-prose :global(ul),
+  .legal-prose :global(ol) { padding-left: 1.3rem; margin-bottom: 1rem; }
+  .legal-prose :global(li) { margin-bottom: 0.35rem; }
+  .legal-prose :global(a) {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--amber);
+  }
+
+  .withdrawal { margin-top: 3rem; }
+  .withdrawal h2 { font-size: var(--step-2); margin-bottom: 0.6rem; }
+  .muted { color: var(--taupe); font-size: var(--step--1); }
+  .form-box {
+    margin-top: 1rem;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    background: var(--bone-2);
+    border: 1px solid var(--line-ink);
+    border-radius: var(--radius);
+  }
+  .form-box p { margin-bottom: 0.4rem; }
+  .form-box .line { border-bottom: 1px solid var(--line-ink); margin-bottom: 0.9rem; }
+
+  @media (max-width: 560px) {
+    .company > div { grid-template-columns: 1fr; gap: 0.15rem; }
+  }
+</style>

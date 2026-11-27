@@ -77,6 +77,22 @@ straight from the form instead, set `FORM_ENDPOINT` in `src/site.ts`:
 "Ask about this piece" opens the contact page with the topic chosen and
 the message started.
 
+## Policies and business details
+
+- **Privacy Policy** (`src/pages/privacy.md`) and **Terms of Sale**
+  (`src/pages/terms.md`, with the withdrawal form) are plain Markdown: edit
+  the text there. Both are linked at the bottom of every page, and the
+  contact form links to the Privacy Policy.
+- The business details shown on both pages (legal name, registration number,
+  registered address, VAT number) and the "Last updated" date are set once in
+  **`src/site.ts`** (`COMPANY`, `POLICIES_UPDATED`). Empty ones show as
+  "[to be added]".
+- The site loads nothing from other companies: the fonts are served from
+  `public/fonts/` (`src/styles/fonts.css`), and there are no cookies or
+  analytics, so no cookie banner is needed. If analytics or embedded videos
+  from other services are ever added, update the Privacy Policy and add a
+  consent banner first.
+
 ## Still to check
 
 - **Keeper's exact height** (`src/content/elements/keeper.md`): the copy says
@@ -88,7 +104,7 @@ the message started.
 
 ## Type & colour
 
-- Display: **Fraunces**. Body: **Hanken Grotesk**. Both from Google Fonts, and
+- Display: **Fraunces**. Body: **Hanken Grotesk**. Both served from the site itself, and
   both cover the full Latvian set (ā č ē ģ ī ķ ļ ņ š ū ž) for a later Latvian version.
 - Palette sampled from the logo files: ink `#1E1A17`, bone `#E5DBCF`,
   amber `#C58A3D` (the 2700 K light). Tokens live in `src/styles/global.css`.
